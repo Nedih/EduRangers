@@ -1,7 +1,5 @@
-﻿using EduRangers.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -9,55 +7,34 @@ using System.Web.Http;
 
 namespace EduRangers.Controllers
 {
+    [Authorize]
     public class ValuesController : ApiController
     {
-        ApplicationContext db = new ApplicationContext();
-
-        public IEnumerable<User> GetUsers()
+        // GET api/values
+        public IEnumerable<string> Get()
         {
-            return db.Users;
+            return new string[] { "value1", "value2" };
         }
 
-        public User GetUser(int id)
+        // GET api/values/5
+        public string Get(int id)
         {
-            User User = db.Users.Find(id);
-            return User;
+            return "value";
         }
 
-        [HttpPost]
-        public void CreateUser([FromBody]User User)
+        // POST api/values
+        public void Post([FromBody]string value)
         {
-            db.Users.Add(User);
-            db.SaveChanges();
         }
 
-        [HttpPut]
-        public void EditUser(int id, [FromBody]User User)
+        // PUT api/values/5
+        public void Put(int id, [FromBody]string value)
         {
-            if (id == User.Id)
-            {
-                db.Entry(User).State = EntityState.Modified;
-
-                db.SaveChanges();
-            }
         }
 
-        public void DeleteUser(int id)
+        // DELETE api/values/5
+        public void Delete(int id)
         {
-            User User = db.Users.Find(id);
-            if (User != null)
-            {
-                db.Users.Remove(User);
-                db.SaveChanges();
-            }
-        }
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
         }
     }
 }
