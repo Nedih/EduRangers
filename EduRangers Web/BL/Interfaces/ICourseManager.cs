@@ -10,11 +10,11 @@ namespace BL.Interfaces
 {
     public interface ICourseManager
     {
-        IEnumerable<Course> GetCourse();
+        IEnumerable<CourseModel> GetCourse();
 
-        Course GetCourseById(int id);
+        CourseModel GetCourseById(int id);
 
-        Course GetCourse(Func<Course, bool> predicate);
+        CourseModel GetCourse(Func<Course, bool> predicate);
 
         void CreateCourse(CourseModel model);
 

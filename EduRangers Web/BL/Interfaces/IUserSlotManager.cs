@@ -10,11 +10,11 @@ namespace BL.Interfaces
 {
     public interface IUserSlotManager
     {
-        IEnumerable<UserSlot> GetUserSlot();
+        IEnumerable<UserSlotModel> GetUserSlot();
 
-        UserSlot GetUserSlotById(int id);
+        UserSlotModel GetUserSlotById(int id);
 
-        UserSlot GetUserSlot(Func<UserSlot, bool> predicate);
+        UserSlotModel GetUserSlot(Func<UserSlot, bool> predicate);
 
         void CreateUserSlot(UserSlotModel model);
 

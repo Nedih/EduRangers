@@ -22,7 +22,7 @@ namespace BL.Services
         {
             //Ability ability = new Ability();
 
-            var mapper = MapHelper.Mapping<Ability, AbilityModel>();
+            var mapper = MapHelper.Mapping<AbilityModel, Ability>();
             Ability ability = mapper.Map<Ability>(model);
 
             this.repository.AddAndSave<Ability>(ability);
@@ -34,7 +34,7 @@ namespace BL.Services
         }
         public IEnumerable<AbilityModel> GetAbility()
         {
-            var mapper = MapHelper.Mapping<AbilityModel, Ability>();
+            var mapper = MapHelper.Mapping<Ability, AbilityModel>();
             return mapper.Map<List<AbilityModel>>(this.repository.GetAll<Ability>());
             
         }

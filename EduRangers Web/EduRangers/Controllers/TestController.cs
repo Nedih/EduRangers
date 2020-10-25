@@ -1,0 +1,54 @@
+﻿using BinderLayer.Models;
+using BL.Interfaces;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net;
+using System.Net.Http;
+using System.Web.Http;
+using System.Web.Http.Cors;
+
+namespace EduRangers.Controllers
+{
+    [EnableCors(origins: "http://localhost:3000/", headers: "", methods: "")]
+    public class TestController : ApiController
+    {
+        private readonly ITestManager testService;
+        // GET api/values
+        public TestController(ITestManager chapterService)
+        {
+            this.testService = chapterService;
+        }
+        [HttpGet]
+        public IEnumerable<TestModel> Get()
+        {
+
+            return this.testService.GetTest();
+        }
+
+        // GET api/values/5
+        public TestModel Get(int id)
+        {
+            return this.testService.GetTestById(id);
+        }
+
+        // POST api/values
+        [HttpPost]
+        public void Post(TestModel chapterModel)
+        {
+            testService.CreateTest(chapterModel);
+        }
+
+        // PUT api/values/5
+        public void Put(int id, [FromBody]TestModel model)
+        {
+            testService.UpdateTest(id, model);
+        }
+
+        // DELETE api/values/5
+        public void Delete(int id)
+        {
+            testService.RemoveTest(id);
+        }
+    }
+}

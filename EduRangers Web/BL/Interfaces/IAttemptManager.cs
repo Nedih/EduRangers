@@ -10,11 +10,11 @@ namespace BL.Interfaces
 {
     public interface IAttemptManager
     {
-        IEnumerable<Attempt> GetAttempt();
+        IEnumerable<AttemptModel> GetAttempt();
 
-        Attempt GetAttemptById(int id);
+        AttemptModel GetAttemptById(int id);
 
-        Attempt GetAttempt(Func<Attempt, bool> predicate);
+        AttemptModel GetAttempt(Func<Attempt, bool> predicate);
 
         void CreateAttempt(AttemptModel model);
 

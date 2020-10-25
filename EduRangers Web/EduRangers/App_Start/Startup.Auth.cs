@@ -29,8 +29,9 @@ namespace EduRangers.App_Start
 
             var container = new Container();
 
-            container.RegisterWebApiControllers(GlobalConfiguration.Configuration);
             IoCResolver.Load(container);
+            container.RegisterWebApiControllers(GlobalConfiguration.Configuration);
+            
             GlobalConfiguration.Configuration.DependencyResolver = new SimpleInjectorWebApiDependencyResolver(container);
             container.Verify();
             app.Use(async (context, next) =>

@@ -10,11 +10,11 @@ namespace BL.Interfaces
 {
     public interface ITestManager
     {
-        IEnumerable<Test> GetTest();
+        IEnumerable<TestModel> GetTest();
 
-        Test GetTestById(int id);
+        TestModel GetTestById(int id);
 
-        Test GetTest(Func<Test, bool> predicate);
+        TestModel GetTest(Func<Test, bool> predicate);
 
         void CreateTest(TestModel model);
 

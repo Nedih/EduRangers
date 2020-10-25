@@ -8,13 +8,13 @@ using System.Threading.Tasks;
 
 namespace BL.Interfaces
 {
-    public interface IQuestionionManager
+    public interface IQuestionManager
     {
-        IEnumerable<Question> GetQuestion();
+        IEnumerable<QuestionModel> GetQuestion();
 
-        Question GetQuestionById(int id);
+        QuestionModel GetQuestionById(int id);
 
-        Question GetQuestion(Func<Question, bool> predicate);
+        QuestionModel GetQuestion(Func<Question, bool> predicate);
 
         void CreateQuestion(QuestionModel model);
 
