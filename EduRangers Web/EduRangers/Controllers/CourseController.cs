@@ -14,6 +14,8 @@ namespace EduRangers.Controllers
     public class CourseController : ApiController
     {
         private readonly ICourseManager courseService;
+        private readonly ICourseAbilityManager courseAbilityService;
+        private readonly IAbilityManager abilityService;
         // GET api/values
         public CourseController(ICourseManager chapterService)
         {
@@ -34,9 +36,14 @@ namespace EduRangers.Controllers
 
         // POST api/values
         [HttpPost]
-        public void Post(CourseModel chapterModel)
+        public void Post(int[] abilities, CourseModel courseModel)
         {
-            courseService.CreateCourse(chapterModel);
+            courseService.CreateCourse(courseModel);
+            foreach(int id in abilities)
+            {
+                CourseAbilityModel model = new CourseAbilityModel { Course = courseModel, Ability = abilityService.GetAbilityById(id)};
+                courseAbilityService.CreateCourseAbility(model);
+            }
         }
 
         // PUT api/values/5

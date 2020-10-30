@@ -6,5 +6,6 @@ namespace BinderLayer.Models
     {
         public int Id { get; set; }
         public string AbilityDescription { get; set; }
+        public UserSlotModel UserSlot { get; set; }
     }
 }

@@ -13,11 +13,13 @@ namespace BL.Services
     public class CourseManager : ICourseManager
     {
         private readonly IRepository repository;
+        private readonly ICourseAbilityManager courseAbilityService;
 
-        public CourseManager(IRepository repo)
+        public CourseManager(IRepository repo, ICourseAbilityManager courseAbilityService)
         {
             this.repository = repo;
-        }
+            this.courseAbilityService = courseAbilityService;
+    }
         public void CreateCourse(CourseModel model)
         {
             //Course course = new Course();

@@ -9,7 +9,7 @@ using System.Text;
 
 namespace BL.Services
 {
-    class UserSlotManager : IUserSlotManager
+    public class UserSlotManager : IUserSlotManager
     {
         private readonly IRepository repository;
 

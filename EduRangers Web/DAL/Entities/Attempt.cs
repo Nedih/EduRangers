@@ -1,4 +1,5 @@
 ﻿using BinderLayer.Interfaces;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DAL.Entities
 {

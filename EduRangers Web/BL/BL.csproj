@@ -75,7 +75,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DTO\UserDTO.cs" />
     <Compile Include="Identity\RoleManager.cs" />
     <Compile Include="Identity\UserManager.cs" />
     <Compile Include="Infrastructures\IoCResolver.cs" />
@@ -83,6 +82,7 @@
     <Compile Include="Interfaces\IAbilityManager.cs" />
     <Compile Include="Interfaces\IAccountService.cs" />
     <Compile Include="Interfaces\IAttemptManager.cs" />
+    <Compile Include="Interfaces\ICourseAbilityManager.cs" />
     <Compile Include="Interfaces\ICourseManager.cs" />
     <Compile Include="Interfaces\IUserService.cs" />
     <Compile Include="Interfaces\IQuestionManager.cs" />
@@ -93,6 +93,7 @@
     <Compile Include="Services\AbilityManager.cs" />
     <Compile Include="Services\AccountService.cs" />
     <Compile Include="Services\AttemptManager.cs" />
+    <Compile Include="Services\CourseAbilityManager.cs" />
     <Compile Include="Services\CourseManager.cs" />
     <Compile Include="Services\QuestionManager.cs" />
     <Compile Include="Services\TestManager.cs" />

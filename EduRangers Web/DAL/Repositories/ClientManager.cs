@@ -21,6 +21,14 @@ namespace DAL.Repositories
             Database.SaveChanges();
         }
 
+        public void Update(ClientProfile item)
+        {
+            var profile = Database.ClientProfiles.FirstOrDefault(x => x.Id == item.Id);
+            Database.ClientProfiles.Remove(profile);
+            Database.ClientProfiles.Add(item);
+            Database.SaveChanges();
+        }
+
         public void Dispose()
         {
             Database.Dispose();

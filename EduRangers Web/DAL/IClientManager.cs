@@ -10,5 +10,6 @@ namespace DAL
     public interface IClientManager : IDisposable
     {
         void Create(ClientProfile item);
+        void Update(ClientProfile item);
     }
 }

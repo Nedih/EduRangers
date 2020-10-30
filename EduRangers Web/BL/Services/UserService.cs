@@ -1,5 +1,6 @@
-﻿using BinderLayer.Interfaces;
-using BL.DTO;
+﻿using BinderLayer.DTO;
+using BinderLayer.Interfaces;
+using BinderLayer.Models;
 using BL.Identity;
 using BL.Infrastructures;
 using BL.Interfaces;
@@ -25,14 +26,38 @@ namespace BL.Services
 
         private readonly IRepository repo;
 
-        public UserService(IClientManager clientManager, IRepository repo, UserManager userManager, RoleManager roleManager)
+        private readonly UserSlotManager userSlotManager;
+
+        public UserService(IClientManager clientManager, IRepository repo, UserManager userManager, RoleManager roleManager, UserSlotManager userSlotManager)
         {
             this.clientManager = clientManager;
             this.repo = repo;
             this.userManager = userManager;
             this.roleManager = roleManager;
-
+            this.userSlotManager = userSlotManager;
         }
+
+        public IEnumerable<UserDTO> GetUsers()
+        {
+            var users = userManager.Users.ToList();
+            var mapper = MapHelper.Mapping<User, UserDTO>();
+            return mapper.Map<List<UserDTO>>(users);
+        }
+
+        public async Task<OperationDetails> Update(string id, UserDTO userDto)
+        {
+            var user = this.userManager.FindById(id);
+            if (user == null)
+                throw new NullReferenceException();
+            user.Email = userDto.Email;
+            user.UserName = userDto.UserName;
+            var result = await userManager.UpdateAsync(user);
+            ClientProfile clientProfile = new ClientProfile { Id = user.Id, Address = userDto.Address, Name = userDto.Name };
+            clientManager.Update(clientProfile);
+            await repo.SaveAsync();
+            return new OperationDetails(true, "The user was succesfully updated");
+        }
+
         public async Task<OperationDetails> Create(UserDTO userDto)
         {
             User user = await userManager.FindByEmailAsync(userDto.Email);
@@ -55,6 +80,53 @@ namespace BL.Services
                 return new OperationDetails(false, "Пользователь с таким логином уже существует");
             }
         }
+
+        public async Task<OperationDetails> CreateStudent(StudentDTO userDto)
+        {
+            User user = await userManager.FindByEmailAsync(userDto.Email);
+            if (user == null)
+            {
+                user = new Student { Email = userDto.Email, UserName = userDto.Email };
+                var result = await userManager.CreateAsync(user, userDto.Password);
+                if (result.Errors.Count() > 0)
+                    return new OperationDetails(false, result.Errors.FirstOrDefault());
+                // добавляем роль
+                await userManager.AddToRoleAsync(user.Id, userDto.Role);
+                // создаем профиль клиента
+                ClientProfile clientProfile = new ClientProfile { Id = user.Id, Address = userDto.Address, Name = userDto.Name };
+                clientManager.Create(clientProfile);
+                await repo.SaveAsync();
+                return new OperationDetails(true, "Регистрация успешно пройдена");
+            }
+            else
+            {
+                return new OperationDetails(false, "Пользователь с таким логином уже существует");
+            }
+        }
+
+        public async Task<OperationDetails> CreateProfessor(ProfessorDTO userDto)
+        {
+            User user = await userManager.FindByEmailAsync(userDto.Email);
+            if (user == null)
+            {
+                user = new Professor { Email = userDto.Email, UserName = userDto.Email };
+                var result = await userManager.CreateAsync(user, userDto.Password);
+                if (result.Errors.Count() > 0)
+                    return new OperationDetails(false, result.Errors.FirstOrDefault());
+                // добавляем роль
+                await userManager.AddToRoleAsync(user.Id, userDto.Role);
+                // создаем профиль клиента
+                ClientProfile clientProfile = new ClientProfile { Id = user.Id, Address = userDto.Address, Name = userDto.Name };
+                clientManager.Create(clientProfile);
+                await repo.SaveAsync();
+                return new OperationDetails(true, "Регистрация успешно пройдена");
+            }
+            else
+            {
+                return new OperationDetails(false, "Пользователь с таким логином уже существует");
+            }
+        }
+
         public async Task<ClaimsIdentity> Authenticate(UserDTO userDto)
         {
             ClaimsIdentity claim = null;
@@ -80,6 +152,12 @@ namespace BL.Services
                 }
             }
             await Create(adminDto);
+        }
+
+        public async Task UseAbility(StudentDTO userDto, AbilityModel ability) {
+            User user = await userManager.FindByEmailAsync(userDto.Email);
+
+            //await userSlotManager.GetUserSlot(); user.Id;
         }
 
         public void Dispose()

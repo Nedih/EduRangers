@@ -7,7 +7,7 @@ namespace DAL.Entities
     {
         public int Id { get; set; }
         public string AbilityDescription { get; set; }
-        public List<Course> RestrictedCourses { get; set; }
+        public List<CourseAbility> Courses { get; set; }
         public List<UserSlot> UserSlots { get; set; }
     }
 }

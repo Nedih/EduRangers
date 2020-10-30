@@ -44,3 +44,7 @@ C:\Users\Flash\Documents\GitHub\EduRangers\EduRangers Web\DAL\obj\Debug\DAL.cspr
 C:\Users\Flash\Documents\GitHub\EduRangers\EduRangers Web\DAL\obj\Debug\DAL.csproj.CopyComplete
 C:\Users\Flash\Documents\GitHub\EduRangers\EduRangers Web\DAL\obj\Debug\DAL.dll
 C:\Users\Flash\Documents\GitHub\EduRangers\EduRangers Web\DAL\obj\Debug\DAL.pdb
+C:\Users\Flash\Documents\GitHub\EduRangers\EduRangers Web\DAL\obj\Debug\DAL.Migrations.InitialCreate.resources
+C:\Users\Flash\Documents\GitHub\EduRangers\EduRangers Web\DAL\obj\Debug\DAL.csproj.GenerateResource.cache
+C:\Users\Flash\Documents\GitHub\EduRangers\EduRangers Web\DAL\obj\Debug\DAL.Migrations.Log.resources
+C:\Users\Flash\Documents\GitHub\EduRangers\EduRangers Web\DAL\obj\Debug\DAL.Migrations.BanAbilities.resources

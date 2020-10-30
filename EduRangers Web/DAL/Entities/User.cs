@@ -5,8 +5,8 @@ namespace DAL.Entities
 {
     public class User : IdentityUser
     {
-        public string Login { get; set; }
-        public string Password { get; set; }
+        //public string Login { get; set; }
+        //public string Password { get; set; }
         public string UserAvatar { get; set; }
         public virtual ClientProfile ClientProfile { get; set; }
     }

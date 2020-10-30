@@ -17,10 +17,10 @@ using EduRangers.Models;
 using EduRangers.Providers;
 using EduRangers.Results;
 using BL.Interfaces;
-using BL.DTO;
 using BL.Identity;
 using BinderLayer.Models;
 using BL.Infrastructures;
+using BinderLayer.DTO;
 
 namespace EduRangers.Controllers
 {
@@ -39,6 +39,20 @@ namespace EduRangers.Controllers
             {
                 return HttpContext.Current.GetOwinContext().Authentication;
             }
+        }
+
+        [HttpGet]
+        public IEnumerable<UserDTO> Get()
+        {
+
+            return this.UserService.GetUsers();
+        }
+
+        [HttpPut]
+        public async Task<OperationDetails> Update(string id, UserDTO user)
+        {
+
+            return await this.UserService.Update(id, user);
         }
 
         [Route("Login")]
@@ -73,9 +87,32 @@ namespace EduRangers.Controllers
             return new OperationDetails(true, "You have successfuly logged out");
         }
 
-        [Route("Register")]
+        [Route("RegisterProfessor")]
         //[ValidateAntiForgeryToken]
-        public async Task<OperationDetails> Register(RegisterModel model)
+        public async Task<OperationDetails> RegisterProfessor(RegisterModel model)
+        {
+            await SetInitialDataAsync();
+            if (ModelState.IsValid)
+            {
+                UserDTO userDto = new UserDTO
+                {
+                    Email = model.Email,
+                    Password = model.Password,
+                    Address = model.Address,
+                    Name = model.Name,
+                    Role = "user"
+                };
+                OperationDetails operationDetails = await UserService.Create(userDto);
+                if (operationDetails.Succedeed)
+                    return new OperationDetails(true, "Successful Registration");
+                else
+                    ModelState.AddModelError(operationDetails.Message, operationDetails.Message);
+            }
+            return new OperationDetails(false, "404, you have died");
+        }
+        [Route("RegisterStudent")]
+        //[ValidateAntiForgeryToken]
+        public async Task<OperationDetails> RegisterStudent(RegisterModel model)
         {
             await SetInitialDataAsync();
             if (ModelState.IsValid)

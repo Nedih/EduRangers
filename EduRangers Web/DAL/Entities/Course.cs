@@ -1,5 +1,6 @@
 ﻿using BinderLayer.Interfaces;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DAL.Entities
 {
@@ -10,6 +11,6 @@ namespace DAL.Entities
         public string CourseName { get; set; }
         public string CourseDescription { get; set; }
         public List<Test> Tests { get; set; }
-        public List<Ability> BannedAbilities { get; set; }
+        public List<CourseAbility> Abilities { get; set; }
     }
 }
