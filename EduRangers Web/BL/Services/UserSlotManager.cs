@@ -70,5 +70,13 @@ namespace BL.Services
 
             this.repository.UpdateAndSave(userSlot);
         }
+        public void UseAbility(int abilityId, string studentId) {
+            var userSlot = this.repository.FirstorDefault<UserSlot>(x => x.Ability.Id == abilityId && x.Owner.Id == studentId);
+            if (userSlot == null)
+                throw new NullReferenceException();
+            if (userSlot.Count == 0)
+                throw new NullReferenceException();
+            userSlot.Count -= 1;
+        }
     }
 }

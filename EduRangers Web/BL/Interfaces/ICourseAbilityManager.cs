@@ -18,6 +18,6 @@ namespace BL.Interfaces
 
         //void UpdateAbility(int id, CourseAbilityModel model);
 
-        void RemoveCourseAbility(int courseId, int abilityId);
+        void RemoveCourseAbility(int courseId);
     }
 }

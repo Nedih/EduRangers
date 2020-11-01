@@ -154,10 +154,21 @@ namespace BL.Services
             await Create(adminDto);
         }
 
-        public async Task UseAbility(StudentDTO userDto, AbilityModel ability) {
-            User user = await userManager.FindByEmailAsync(userDto.Email);
+        /* public async Task UseAbility(StudentDTO userDto, AbilityModel ability) {
+             User user = await userManager.FindByEmailAsync(userDto.Email);
 
-            //await userSlotManager.GetUserSlot(); user.Id;
+             //await userSlotManager.GetUserSlot(); user.Id;
+         }*/
+
+        public async Task<OperationDetails> VerifyUser(string userId) {
+            User user = userManager.FindById(userId);
+            // var mapper = MapHelper.Mapping<User, Professor>();
+            //var professor = mapper.Map<Professor>(user);
+            Professor professor = (Professor)user;
+            professor.IsApplied = true;
+            await userManager.UpdateAsync(professor);
+            await repo.SaveAsync();
+            return new OperationDetails(true, "The user was succesfully verified");
         }
 
         public void Dispose()

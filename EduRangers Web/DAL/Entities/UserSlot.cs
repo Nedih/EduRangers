@@ -8,6 +8,6 @@ namespace DAL.Entities
         public int Id { get; set; }
         public Student Owner { get; set; }
         public Ability Ability { get; set; }
-        public int count { get; set; }
+        public int Count { get; set; }
     }
 }

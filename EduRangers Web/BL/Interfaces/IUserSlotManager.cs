@@ -21,5 +21,6 @@ namespace BL.Interfaces
         void UpdateUserSlot(int id, UserSlotModel model);
 
         void RemoveUserSlot(int id);
+        void UseAbility(int abilityId, string studentId);
     }
 }

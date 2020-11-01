@@ -19,6 +19,7 @@ namespace BL.Interfaces
         Task<OperationDetails> CreateProfessor(ProfessorDTO userDto);
         Task<ClaimsIdentity> Authenticate(UserDTO userDto);
         Task SetInitialData(UserDTO adminDto, List<string> roles);
-        Task UseAbility(StudentDTO userDto, AbilityModel ability);
+        //Task UseAbility(StudentDTO userDto, AbilityModel ability);
+        Task<OperationDetails> VerifyUser(string userId);
     }
 }

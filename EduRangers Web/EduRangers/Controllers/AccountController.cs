@@ -133,6 +133,10 @@ namespace EduRangers.Controllers
             }
             return new OperationDetails(false, "404, you have died");
         }
+        public async Task<OperationDetails> Verify(string id)
+        {
+             return await UserService.VerifyUser(id);
+        }
         private async Task SetInitialDataAsync()
         {
             await UserService.SetInitialData(new UserDTO

@@ -41,12 +41,16 @@ namespace BL.Services
             return mapper.Map<CourseAbilityModel>(this.repository.FirstorDefault<CourseAbility>(x => x.Ability.Id == abilityId && x.Course.Id == courseId));
         }
 
-        public void RemoveCourseAbility(int courseId, int abilityId)
+        public void RemoveCourseAbility(int courseId)
         {
-            var ability = this.repository.FirstorDefault<CourseAbility>(x => x.Ability.Id == abilityId && x.Course.Id == courseId);
-            if (ability == null)
-                throw new NullReferenceException();
-            this.repository.RemoveAndSave(ability);
+            var ability = this.repository.FirstorDefault<CourseAbility>(x => x.Course.Id == courseId);
+            while (ability != null)
+            {
+                ability = this.repository.FirstorDefault<CourseAbility>(x => x.Course.Id == courseId);
+                if (ability == null)
+                    throw new NullReferenceException();
+                this.repository.RemoveAndSave(ability);
+            }
         }
     }
 }

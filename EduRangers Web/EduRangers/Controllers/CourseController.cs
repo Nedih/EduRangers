@@ -47,9 +47,15 @@ namespace EduRangers.Controllers
         }
 
         // PUT api/values/5
-        public void Put(int id, [FromBody]CourseModel model)
+        public void Put(int id, int[] abilities, [FromBody]CourseModel model)
         {
             courseService.UpdateCourse(id, model);
+            courseAbilityService.RemoveCourseAbility(model.Id);
+            foreach (int abilityId in abilities)
+            {               
+                CourseAbilityModel courseAbility = new CourseAbilityModel { Course = model, Ability = abilityService.GetAbilityById(abilityId) };
+                courseAbilityService.CreateCourseAbility(courseAbility);
+            }
         }
 
         // DELETE api/values/5
