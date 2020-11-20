@@ -11,6 +11,7 @@ using System.Web.Http.Cors;
 namespace EduRangers.Controllers
 {
     [EnableCors(origins: "http://localhost:3000/", headers: "", methods: "")]
+    [RoutePrefix("api/Course")]
     public class CourseController : ApiController
     {
         private readonly ICourseManager courseService;
@@ -34,16 +35,22 @@ namespace EduRangers.Controllers
             return this.courseService.GetCourseById(id);
         }
 
+        [Route("ProfCourses")]
+        public IEnumerable<CourseModel> GetProfCurses(string email)
+        {
+            return this.courseService.GetCourseByProf(email);
+        }
+
         // POST api/values
         [HttpPost]
-        public void Post(int[] abilities, CourseModel courseModel)
+        public void Post(CourseModel courseModel) //int[] abilities,
         {
             courseService.CreateCourse(courseModel);
-            foreach(int id in abilities)
+            /*foreach(int id in abilities)
             {
                 CourseAbilityModel model = new CourseAbilityModel { Course = courseModel, Ability = abilityService.GetAbilityById(id)};
                 courseAbilityService.CreateCourseAbility(model);
-            }
+            }*/
         }
 
         // PUT api/values/5

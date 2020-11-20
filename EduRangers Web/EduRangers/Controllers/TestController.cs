@@ -11,6 +11,7 @@ using System.Web.Http.Cors;
 namespace EduRangers.Controllers
 {
     [EnableCors(origins: "http://localhost:3000/", headers: "", methods: "")]
+    [RoutePrefix("api/Test")]
     public class TestController : ApiController
     {
         private readonly ITestManager testService;

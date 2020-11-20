@@ -1,7 +1,9 @@
 ﻿using BinderLayer.Interfaces;
 using BinderLayer.Models;
+using BL.Identity;
 using BL.Interfaces;
 using DAL.Entities;
+using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,12 +15,12 @@ namespace BL.Services
     public class CourseManager : ICourseManager
     {
         private readonly IRepository repository;
-        private readonly ICourseAbilityManager courseAbilityService;
+        private readonly UserManager userManager;
 
-        public CourseManager(IRepository repo, ICourseAbilityManager courseAbilityService)
+        public CourseManager(IRepository repo, UserManager userManager)
         {
             this.repository = repo;
-            this.courseAbilityService = courseAbilityService;
+            this.userManager = userManager;
     }
         public void CreateCourse(CourseModel model)
         {
@@ -26,8 +28,10 @@ namespace BL.Services
 
             var mapper = MapHelper.Mapping<CourseModel, Course>();
             Course course = mapper.Map<Course>(model);
+            Professor p = (Professor)this.userManager.FindByEmail(model.AuthorEmail);
+            course.Author = p;
 
-            this.repository.AddAndSave<Course>(course);
+            this.repository.AddAndSave(course);
         }
 
         public void Dispose()
@@ -44,15 +48,23 @@ namespace BL.Services
         public CourseModel GetCourse(Func<Course, bool> predicate)
         {
 
-            var mapper = MapHelper.Mapping<CourseModel, Course>();
+            var mapper = MapHelper.Mapping<Course, CourseModel>();
             return mapper.Map<CourseModel>(this.repository.FirstorDefault(predicate));
         }
 
         public CourseModel GetCourseById(int id)
         {
 
-            var mapper = MapHelper.Mapping<CourseModel, Course>();
+            var mapper = MapHelper.Mapping<Course, CourseModel>();
             return mapper.Map<CourseModel>(this.repository.FirstorDefault<Course>(x => x.Id == id));
+        }
+
+        public IEnumerable<CourseModel> GetCourseByProf(string email)
+        {
+
+            var mapper = MapHelper.Mapping<Course, CourseModelMap>();
+            var mapper2 = MapHelper.Mapping<CourseModelMap, CourseModel>();
+            return mapper2.Map<List<CourseModel>>(mapper.Map<List<CourseModelMap>>(this.repository.GetWhere<Course>(x => x.Author.Email == email)));
         }
 
         public void RemoveCourse(int id)
@@ -68,7 +80,7 @@ namespace BL.Services
             var course = this.repository.FirstorDefault<Course>(x => x.Id == id);
             if (course == null)
                 throw new NullReferenceException();
-            var mapper = MapHelper.Mapping<Course, CourseModel>();
+            var mapper = MapHelper.Mapping<CourseModel, Course>();
             course = mapper.Map<Course>(model);
 
             this.repository.UpdateAndSave(course);

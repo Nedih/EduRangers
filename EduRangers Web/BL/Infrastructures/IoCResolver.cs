@@ -32,7 +32,6 @@ namespace BL.Infrastructures
             container.Register<IQuestionManager, QuestionManager>(Lifestyle.Scoped);
             container.Register<ITestManager, TestManager>(Lifestyle.Scoped);
             container.Register<IUserSlotManager, UserSlotManager>(Lifestyle.Scoped);
-            container.Register<IClientManager, ClientManager>(Lifestyle.Scoped);
             container.Register<IUserService, UserService>(Lifestyle.Scoped);
 
 

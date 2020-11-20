@@ -15,6 +15,7 @@ namespace BL.Interfaces
         CourseModel GetCourseById(int id);
 
         CourseModel GetCourse(Func<Course, bool> predicate);
+        IEnumerable<CourseModel> GetCourseByProf(string email);
 
         void CreateCourse(CourseModel model);
 

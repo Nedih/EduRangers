@@ -57,14 +57,12 @@
     <Compile Include="Entities\Ability.cs" />
     <Compile Include="Entities\Attempt.cs" />
     <Compile Include="Entities\CourseAbility.cs" />
-    <Compile Include="Entities\ClientProfile.cs" />
     <Compile Include="Entities\Course.cs" />
     <Compile Include="Entities\Question.cs" />
     <Compile Include="Entities\Role.cs" />
     <Compile Include="Entities\Test.cs" />
     <Compile Include="Entities\User.cs" />
     <Compile Include="Entities\UserSlot.cs" />
-    <Compile Include="IClientManager.cs" />
     <Compile Include="Migrations\202010231300363_InitialCreate.cs" />
     <Compile Include="Migrations\202010231300363_InitialCreate.Designer.cs">
       <DependentUpon>202010231300363_InitialCreate.cs</DependentUpon>
@@ -77,9 +75,12 @@
     <Compile Include="Migrations\202010300012028_BanAbilities.Designer.cs">
       <DependentUpon>202010300012028_BanAbilities.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202011162232425_DeleteProfiles.cs" />
+    <Compile Include="Migrations\202011162232425_DeleteProfiles.Designer.cs">
+      <DependentUpon>202011162232425_DeleteProfiles.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Repositories\ClientManager.cs" />
     <Compile Include="Repositories\Repository.cs" />
     <Compile Include="UserContext.cs" />
   </ItemGroup>
@@ -92,6 +93,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202010300012028_BanAbilities.resx">
       <DependentUpon>202010300012028_BanAbilities.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202011162232425_DeleteProfiles.resx">
+      <DependentUpon>202011162232425_DeleteProfiles.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

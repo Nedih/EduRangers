@@ -11,7 +11,8 @@ using System.Web.Http.Cors;
 namespace EduRangers.Controllers
 {
 
-    [EnableCors(origins: "http://localhost:44327/", headers: "", methods: "")]
+    [EnableCors(origins: "http://localhost:3000/", headers: "", methods: "")]
+    [RoutePrefix("api/Ability")]
     public class AbilityController : ApiController
     {
         private readonly IAbilityManager abilityService;

@@ -7,6 +7,7 @@ namespace BinderLayer.Models
     {
         public int Id { get; set; }
         public ProfessorDTO Author { get; set; }
+        public string AuthorEmail { get; set; }
         public string CourseName { get; set; }
         public string CourseDescription { get; set; }
     }

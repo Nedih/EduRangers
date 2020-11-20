@@ -9,6 +9,7 @@ namespace BinderLayer.Interfaces
     public interface IRepository : IDisposable
     {
         IList<TEntity> GetAll<TEntity>() where TEntity : class, IEntity;
+        IList<TEntity> GetWhere<TEntity>(Func<TEntity, bool> predicate) where TEntity : class, IEntity;
 
         TEntity FirstorDefault<TEntity>(Func<TEntity, bool> predicate) where TEntity : class, IEntity;
 

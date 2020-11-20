@@ -11,6 +11,7 @@ using System.Web.Http.Cors;
 namespace EduRangers.Controllers
 {
     [EnableCors(origins: "http://localhost:3000/", headers: "", methods: "")]
+    [RoutePrefix("api/UserSlot")]
     public class UserSlotController : ApiController
     {
         private readonly IUserSlotManager userSlotService;

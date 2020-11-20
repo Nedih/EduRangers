@@ -48,3 +48,4 @@ C:\Users\Flash\Documents\GitHub\EduRangers\EduRangers Web\DAL\obj\Debug\DAL.Migr
 C:\Users\Flash\Documents\GitHub\EduRangers\EduRangers Web\DAL\obj\Debug\DAL.csproj.GenerateResource.cache
 C:\Users\Flash\Documents\GitHub\EduRangers\EduRangers Web\DAL\obj\Debug\DAL.Migrations.Log.resources
 C:\Users\Flash\Documents\GitHub\EduRangers\EduRangers Web\DAL\obj\Debug\DAL.Migrations.BanAbilities.resources
+C:\Users\Flash\Documents\GitHub\EduRangers\EduRangers Web\DAL\obj\Debug\DAL.Migrations.DeleteProfiles.resources

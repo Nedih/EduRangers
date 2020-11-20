@@ -21,13 +21,17 @@ using BL.Identity;
 using BinderLayer.Models;
 using BL.Infrastructures;
 using BinderLayer.DTO;
+using System.Web.Http.Cors;
 
 namespace EduRangers.Controllers
 {
     //[Authorize]
+    //[EnableCors(origins: "http://localhost:3000/", headers: "", methods: "")]
     [RoutePrefix("api/Account")]
+    [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class AccountController : ApiController
     {
+        ///[EnableCors(origins: "http://localhost:3000/", headers: "", methods: "")]
         private readonly IUserService UserService;
         public AccountController(IUserService UserService)
         {
@@ -42,10 +46,27 @@ namespace EduRangers.Controllers
         }
 
         [HttpGet]
+        //[EnableCors(origins: "http://localhost:3000/", headers: "*", methods: "*")]
         public IEnumerable<UserDTO> Get()
         {
 
             return this.UserService.GetUsers();
+        }
+
+        [Route("Profile")]
+        [HttpGet]
+        //[EnableCors(origins: "http://localhost:3000/", headers: "*", methods: "*")]
+        public UserDTO GetUser(string email)
+        {
+
+            return this.UserService.GetUsers(email);
+        }
+
+        [HttpDelete]
+        public async Task<OperationDetails> Delete(string id)
+        {
+
+            return await this.UserService.RemoveUser(id);
         }
 
         [HttpPut]
@@ -56,6 +77,8 @@ namespace EduRangers.Controllers
         }
 
         [Route("Login")]
+        [HttpPost]
+        [EnableCors(origins: "*", headers: "*", methods: "*")]
         //[ValidateAntiForgeryToken]
         public async Task<OperationDetails> Login(LoginModel model)
         {
@@ -87,9 +110,10 @@ namespace EduRangers.Controllers
             return new OperationDetails(true, "You have successfuly logged out");
         }
 
-        [Route("RegisterProfessor")]
+        [Route("Register")]
+        [EnableCors(origins: "*", headers: "*", methods: "*")]
         //[ValidateAntiForgeryToken]
-        public async Task<OperationDetails> RegisterProfessor(RegisterModel model)
+        public async Task<OperationDetails> Register([FromBody]RegisterModel model)
         {
             await SetInitialDataAsync();
             if (ModelState.IsValid)
@@ -98,30 +122,7 @@ namespace EduRangers.Controllers
                 {
                     Email = model.Email,
                     Password = model.Password,
-                    Address = model.Address,
-                    Name = model.Name,
-                    Role = "user"
-                };
-                OperationDetails operationDetails = await UserService.Create(userDto);
-                if (operationDetails.Succedeed)
-                    return new OperationDetails(true, "Successful Registration");
-                else
-                    ModelState.AddModelError(operationDetails.Message, operationDetails.Message);
-            }
-            return new OperationDetails(false, "404, you have died");
-        }
-        [Route("RegisterStudent")]
-        //[ValidateAntiForgeryToken]
-        public async Task<OperationDetails> RegisterStudent(RegisterModel model)
-        {
-            await SetInitialDataAsync();
-            if (ModelState.IsValid)
-            {
-                UserDTO userDto = new UserDTO
-                {
-                    Email = model.Email,
-                    Password = model.Password,
-                    Address = model.Address,
+                    IsProfessor = model.IsProfessor,
                     Name = model.Name,
                     Role = "user"
                 };

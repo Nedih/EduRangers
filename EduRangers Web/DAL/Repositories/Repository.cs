@@ -34,6 +34,11 @@ namespace DAL.Repositories
             GC.SuppressFinalize(this);
         }
 
+        IList<TEntity> IRepository.GetWhere<TEntity>(Func<TEntity, bool> predicate)
+        {
+            return this.context.Set<TEntity>().Include("Author").Where(predicate).ToList();
+        }
+
         void IRepository.AddAndSave<TEntity>(TEntity entity)
         {
             this.context.Set<TEntity>().Add(entity);
