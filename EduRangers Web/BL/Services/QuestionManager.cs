@@ -24,8 +24,19 @@ namespace BL.Services
 
             var mapper = MapHelper.Mapping<QuestionModel, Question>(); 
             Question question = mapper.Map<Question>(model);
-
+            question.Test = this.repository.FirstorDefault<Test>(x => x.Id == model.TestId);
             this.repository.AddAndSave<Question>(question);
+        }
+        public IEnumerable<QuestionModel> GetQuestions(int id)
+        {
+            var mapper = MapHelper.Mapping<Question, QuestionModelMap>();
+            var mapper2 = MapHelper.Mapping<QuestionModelMap, QuestionModel>();
+            var temp =  mapper2.Map<List<QuestionModel>>(mapper.Map<List<QuestionModelMap>>(this.repository.GetQuestionWhere<Question>(x => x.Test.Id == id)));
+            foreach(var q in temp)
+            {
+                q.AnswersString = this.repository.GetAnswerWhere<Answer>(x => x.Question.Id == id).ToString();
+            }
+            return temp;
         }
 
         public void Dispose()
@@ -42,15 +53,17 @@ namespace BL.Services
         public QuestionModel GetQuestion(Func<Question, bool> predicate)
         {
 
-            var mapper = MapHelper.Mapping<QuestionModel, Question>();
+            var mapper = MapHelper.Mapping<Question, QuestionModel>();
             return mapper.Map<QuestionModel>(this.repository.FirstorDefault(predicate));
         }
 
         public QuestionModel GetQuestionById(int id)
         {
 
-            var mapper = MapHelper.Mapping<QuestionModel, Question>();
-            return mapper.Map<QuestionModel>(this.repository.FirstorDefault<Question>(x => x.Id == id));
+            var mapper = MapHelper.Mapping<Question, QuestionModel>();
+            var temp =  mapper.Map<QuestionModel>(this.repository.FirstorDefault<Question>(x => x.Id == id));
+            temp.AnswersString = this.repository.GetAnswerWhere<Answer>(x => x.Question.Id == id).ToString();
+            return temp;
         }
 
         public void RemoveQuestion(int id)
@@ -66,7 +79,7 @@ namespace BL.Services
             var question = this.repository.FirstorDefault<Question>(x => x.Id == id);
             if (question == null)
                 throw new NullReferenceException();
-            var mapper = MapHelper.Mapping<Question, QuestionModel>();
+            var mapper = MapHelper.Mapping<QuestionModel, Question>();
             question = mapper.Map<Question>(model);
 
             this.repository.UpdateAndSave(question);

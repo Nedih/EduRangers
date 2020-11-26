@@ -15,10 +15,12 @@ namespace EduRangers.Controllers
     public class QuestionController : ApiController
     {
         private readonly IQuestionManager questionService;
+        private readonly IAnswerManager answerService;
         // GET api/values
-        public QuestionController(IQuestionManager chapterService)
+        public QuestionController(IQuestionManager chapterService, IAnswerManager answerService)
         {
             this.questionService = chapterService;
+            this.answerService = answerService;
         }
         [HttpGet]
         public IEnumerable<QuestionModel> Get()
@@ -30,7 +32,13 @@ namespace EduRangers.Controllers
         // GET api/values/5
         public QuestionModel Get(int id)
         {
-            return this.questionService.GetQuestionById(id);
+            QuestionModel question = this.questionService.GetQuestionById(id);
+            foreach (var i in this.answerService.GetAnswers(id))
+            {
+                question.Answers.Add(i);
+            }
+            return question;
+
         }
 
         // POST api/values

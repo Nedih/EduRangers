@@ -15,12 +15,14 @@ namespace EduRangers.Controllers
     public class CourseController : ApiController
     {
         private readonly ICourseManager courseService;
+        private readonly ITestManager testService;
         private readonly ICourseAbilityManager courseAbilityService;
         private readonly IAbilityManager abilityService;
         // GET api/values
-        public CourseController(ICourseManager chapterService)
+        public CourseController(ICourseManager chapterService, ITestManager testService)
         {
             this.courseService = chapterService;
+            this.testService = testService;
         }
         [HttpGet]
         public IEnumerable<CourseModel> Get()
@@ -32,7 +34,12 @@ namespace EduRangers.Controllers
         // GET api/values/5
         public CourseModel Get(int id)
         {
-            return this.courseService.GetCourseById(id);
+            CourseModel course = this.courseService.GetCourseById(id);
+            IEnumerable<TestModel> t = this.testService.GetTests(id);
+            foreach (var i in t) {
+                course.Tests.Add(i);
+            }
+            return course;
         }
 
         [Route("ProfCourses")]

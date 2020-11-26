@@ -55,6 +55,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Entities\Ability.cs" />
+    <Compile Include="Entities\Answer.cs" />
     <Compile Include="Entities\Attempt.cs" />
     <Compile Include="Entities\CourseAbility.cs" />
     <Compile Include="Entities\Course.cs" />
@@ -79,6 +80,14 @@
     <Compile Include="Migrations\202011162232425_DeleteProfiles.Designer.cs">
       <DependentUpon>202011162232425_DeleteProfiles.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202011211656561_Answers.cs" />
+    <Compile Include="Migrations\202011211656561_Answers.Designer.cs">
+      <DependentUpon>202011211656561_Answers.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202011221522230_Answer2.cs" />
+    <Compile Include="Migrations\202011221522230_Answer2.Designer.cs">
+      <DependentUpon>202011221522230_Answer2.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\Repository.cs" />
@@ -96,6 +105,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202011162232425_DeleteProfiles.resx">
       <DependentUpon>202011162232425_DeleteProfiles.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202011211656561_Answers.resx">
+      <DependentUpon>202011211656561_Answers.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202011221522230_Answer2.resx">
+      <DependentUpon>202011221522230_Answer2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

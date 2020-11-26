@@ -42,14 +42,14 @@ namespace BL.Services
         public AbilityModel GetAbility(Func<Ability, bool> predicate)
         {
             
-            var mapper = MapHelper.Mapping<AbilityModel, Ability>();
+            var mapper = MapHelper.Mapping<Ability, AbilityModel>();
             return mapper.Map<AbilityModel>(this.repository.FirstorDefault(predicate));
         }
 
         public AbilityModel GetAbilityById(int id)
         {
             
-            var mapper = MapHelper.Mapping<AbilityModel, Ability>();
+            var mapper = MapHelper.Mapping<Ability, AbilityModel>();
             return mapper.Map<AbilityModel>(this.repository.FirstorDefault<Ability>(x => x.Id == id));
         }
 
@@ -66,7 +66,7 @@ namespace BL.Services
             var ability = this.repository.FirstorDefault<Ability>(x => x.Id == id);
             if (ability == null)
                 throw new NullReferenceException();
-            var mapper = MapHelper.Mapping<Ability, AbilityModel>();
+            var mapper = MapHelper.Mapping<AbilityModel, Ability>();
             ability = mapper.Map<Ability>(model);
 
             this.repository.UpdateAndSave(ability);

@@ -15,10 +15,12 @@ namespace EduRangers.Controllers
     public class TestController : ApiController
     {
         private readonly ITestManager testService;
+        private readonly IQuestionManager questionService;
         // GET api/values
-        public TestController(ITestManager chapterService)
+        public TestController(ITestManager chapterService, IQuestionManager questionService)
         {
             this.testService = chapterService;
+            this.questionService = questionService;
         }
         [HttpGet]
         public IEnumerable<TestModel> Get()
@@ -28,9 +30,14 @@ namespace EduRangers.Controllers
         }
 
         // GET api/values/5
-        public TestModel Get(int id)
+        public TestModel GetTest(int id)
         {
-            return this.testService.GetTestById(id);
+            TestModel test = this.testService.GetTestById(id);
+            foreach (var i in this.questionService.GetQuestions(id))
+            {
+                test.Questions.Add(i);
+            }
+            return test;
         }
 
         // POST api/values

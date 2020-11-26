@@ -13,6 +13,7 @@ namespace BL.Interfaces
         IEnumerable<QuestionModel> GetQuestion();
 
         QuestionModel GetQuestionById(int id);
+        IEnumerable<QuestionModel> GetQuestions(int id);
 
         QuestionModel GetQuestion(Func<Question, bool> predicate);
 

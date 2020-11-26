@@ -61,10 +61,9 @@ namespace BL.Services
 
         public IEnumerable<CourseModel> GetCourseByProf(string email)
         {
-
             var mapper = MapHelper.Mapping<Course, CourseModelMap>();
             var mapper2 = MapHelper.Mapping<CourseModelMap, CourseModel>();
-            return mapper2.Map<List<CourseModel>>(mapper.Map<List<CourseModelMap>>(this.repository.GetWhere<Course>(x => x.Author.Email == email)));
+            return mapper2.Map<List<CourseModel>>(mapper.Map<List<CourseModelMap>>(this.repository.GetCourseWhere<Course>(x => x.Author.Email == email)));
         }
 
         public void RemoveCourse(int id)

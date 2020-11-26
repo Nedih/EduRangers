@@ -20,5 +20,6 @@ namespace DAL
         public DbSet<Question> Questions { get; set; }
         public DbSet<Test> Tests { get; set; }
         public DbSet<UserSlot> UserSlots { get; set; }
+        public DbSet<Answer> Answers { get; set; }
     }
 }

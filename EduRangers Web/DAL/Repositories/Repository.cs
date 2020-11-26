@@ -34,9 +34,28 @@ namespace DAL.Repositories
             GC.SuppressFinalize(this);
         }
 
+        IList<TEntity> IRepository.GetTestWhere<TEntity>(Func<TEntity, bool> predicate)
+        {
+            return this.context.Set<TEntity>().Include("Questions").Include("Course").Where(predicate).ToList();
+        }
+
         IList<TEntity> IRepository.GetWhere<TEntity>(Func<TEntity, bool> predicate)
         {
-            return this.context.Set<TEntity>().Include("Author").Where(predicate).ToList();
+            return this.context.Set<TEntity>().Where(predicate).ToList();
+        }
+
+        IList<TEntity> IRepository.GetAnswerWhere<TEntity>(Func<TEntity, bool> predicate)
+        {
+            return this.context.Set<TEntity>().Include("Question").Where(predicate).ToList();
+        }
+        IList<TEntity> IRepository.GetCourseWhere<TEntity>(Func<TEntity, bool> predicate)
+        {
+            return this.context.Set<TEntity>().Include("Author").Include("Tests").Where(predicate).ToList();
+        }
+
+        IList<TEntity> IRepository.GetQuestionWhere<TEntity>(Func<TEntity, bool> predicate)
+        {
+            return this.context.Set<TEntity>().Include("Test").Where(predicate).ToList();
         }
 
         void IRepository.AddAndSave<TEntity>(TEntity entity)

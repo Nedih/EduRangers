@@ -24,7 +24,7 @@ namespace BL.Services
 
             var mapper = MapHelper.Mapping<TestModel, Test>();
             Test test = mapper.Map<Test>(model);
-
+            test.Course = this.repository.FirstorDefault<Course>(x => x.Id == model.CourseId);
             this.repository.AddAndSave<Test>(test);
         }
 
@@ -39,17 +39,23 @@ namespace BL.Services
 
         }
 
+        public IEnumerable<TestModel> GetTests(int id) {
+            var mapper = MapHelper.Mapping<Test, TestModelMap>();
+            var mapper2 = MapHelper.Mapping<TestModelMap, TestModel>();
+            return mapper2.Map<List<TestModel>>(mapper.Map<List<TestModelMap>>(this.repository.GetTestWhere<Test>(x => x.Course.Id == id)));
+        }
+
         public TestModel GetTest(Func<Test, bool> predicate)
         {
 
-            var mapper = MapHelper.Mapping<TestModel, Test>();
+            var mapper = MapHelper.Mapping<Test, TestModel>();
             return mapper.Map<TestModel>(this.repository.FirstorDefault(predicate));
         }
 
         public TestModel GetTestById(int id)
         {
 
-            var mapper = MapHelper.Mapping<TestModel, Test>();
+            var mapper = MapHelper.Mapping<Test, TestModel>();
             return mapper.Map<TestModel>(this.repository.FirstorDefault<Test>(x => x.Id == id));
         }
 

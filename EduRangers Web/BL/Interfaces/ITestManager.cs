@@ -13,6 +13,7 @@ namespace BL.Interfaces
         IEnumerable<TestModel> GetTest();
 
         TestModel GetTestById(int id);
+        IEnumerable<TestModel> GetTests(int id);
 
         TestModel GetTest(Func<Test, bool> predicate);
 
