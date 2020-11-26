@@ -7,7 +7,11 @@ import Profile from './Containers/Profile';
 import Courses from './Containers/Courses';
 import Сourse from './Containers/Course';
 import Test from './Containers/Test';
-import { Redirect } from "react-router-dom";
+import Question from './Containers/Question';
+import AddСourse from './Containers/AddCourse';
+import AddTest from './Containers/AddTest';
+import AddQuestion from './Containers/AddQuestion';
+import AddAnswer from './Containers/AddAnswer'
 
 export default function Routes(props) {
   return (
@@ -27,18 +31,11 @@ export default function Routes(props) {
       <Route exact path="/deleteuser">
         <Register />
       </Route>
-      <Route exact path="/courses">
-        <Courses email={props.email}/>
-      </Route>
-      <Route exact path="/course">
-        <Сourse courseid={props.courseid}/>
-      </Route>
-      <Route exact path="/test">
-        <Test testid={props.testid}/>
-      </Route>
-      <Route exact path="/profile">
-        <Profile email={props.email} />
-      </Route>
+      <Route exact path="/courses/:email" component={Courses}/>
+      <Route exact path="/course/:id" component={Сourse} />
+      <Route exact path="/test/:id" component={Test} />
+      <Route exact path="/question/:id" component={Question} />
+      <Route exact path="/profile"component={Profile} />
     </Switch>
   );
 }

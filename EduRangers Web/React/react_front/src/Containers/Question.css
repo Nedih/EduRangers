@@ -1,9 +1,9 @@
 @media all and (min-width: 480px) {
-    .Course {
+    .Question {
       padding: 20px 0;
     }
   
-    .Course form {
+    .Question form {
       margin: 0 auto;
       max-width: 620px;
     }

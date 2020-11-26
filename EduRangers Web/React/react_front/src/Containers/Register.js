@@ -4,7 +4,7 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import './Register.css';
 import { useAppContext } from "../Libs/ContextLib";
-import { Redirect } from "react-router-dom";
+import history from "../GlobalHistory/GlobalHistory"
 
 export default function PostUser() {
   const [status, setStatus] = useState(false);
@@ -45,7 +45,7 @@ export default function PostUser() {
           userHasAuthenticated(true);
           setUserEmail(user.Email);
           alert("You`ve been succesfully registered");
-          <Redirect to ="/" />
+          history.push("/");
         }  
         else alert("You haven`t been registered");
     }
@@ -91,7 +91,7 @@ export default function PostUser() {
             onChange={(e) => setName(e.target.value)}
             />
           </Form.Group>
-          <Form.Check size="lg" controlId="isprofessor" style={{display: 'flex',
+          <Form.Group size="lg" controlId="isprofessor" style={{display: 'flex',
                                                         flexFlow: 'row',
                                                         justifyContent: 'left',}}>
             <Form.Check
@@ -105,7 +105,7 @@ export default function PostUser() {
               onChange={this.handleChange5.bind(this)}*/
             />
             <Form.Label>Professor</Form.Label>
-          </Form.Check>
+          </Form.Group>
           <Button block size="lg" type="submit">
             Sign Up
           </Button>

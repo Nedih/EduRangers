@@ -6,6 +6,7 @@ import { AppContext } from "./Libs/ContextLib";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import { LinkContainer } from "react-router-bootstrap";
+import history from "./GlobalHistory/GlobalHistory"
 import { Redirect } from "react-router-dom";
 
 
@@ -17,6 +18,7 @@ function App(props) {
   function handleLogout() {
     userHasAuthenticated(false);
     setUserEmail("");
+    history.push("/")
     return (<Redirect push to="/" />)
   }
 /*{userEmail, setUserEmail}*/
@@ -33,7 +35,7 @@ function App(props) {
             <> 
           <Navbar.Collapse className="justify-content-left">
           <Nav activeKey={window.location.pathname}>
-          <LinkContainer to="/courses">
+          <LinkContainer to={`/courses/${userEmail}`}>
             <Nav.Link>Courses</Nav.Link>
             </LinkContainer>
           </Nav>
@@ -64,7 +66,7 @@ function App(props) {
         )}
       </Navbar>
       <AppContext.Provider value={{ isAuthenticated, userHasAuthenticated,  userEmail, setUserEmail}}> 
-      <Routes email={userEmail} />
+      <Routes />
       </AppContext.Provider>
     </>
   );

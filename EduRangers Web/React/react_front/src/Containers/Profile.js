@@ -6,39 +6,37 @@ import Button from "react-bootstrap/Button";
 
 export default function Profile(props){
 
+    const [user, setUser] = useState("");
     const [avatar, setAvatar] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [name, setName] = useState("");
-    const [isprofessor, setIsProfessor] = useState(false);
 
     function GetUser() {
       axios({method: 'get',
-      url: `https://localhost:44327/api/Account/Profile/?email=${props.email}`,
+      url: `https://localhost:44327/api/Account/Profile/?email=${props.match.params.email}`,
       headers: {'Content-Type': 'application/json'}})
         .then(
           (result) => {
             console.log(result)
-            setName(result.data.Name)
-            setEmail(result.data.Email)
-            setAvatar(result.data.UserAvatar)
+            setUser(result.data);
           }
         )
     }
 
     function handleSubmit(event) {
         event.preventDefault();
-        const user = {
+        const userModel = {
                 UserAvatar: avatar,
                 Email: email,
                 Password: password,
                 Name: name
             };
-        JSON.stringify(user);
+        JSON.stringify(userModel);
         axios({
           method: 'put',
-          url: "https://localhost:44327/api/Account/",
-          data: JSON.stringify(user),
+          url: `https://localhost:44327/api/Account/?email=${user.Id}`,
+          data: JSON.stringify(userModel),
           maxContentLength: Infinity,
           maxBodyLength: Infinity,
           headers: {'Content-Type': 'application/json'}
@@ -62,7 +60,7 @@ export default function Profile(props){
         <Form.Label>Avatar</Form.Label>
         <Form.Control
             type="text"
-            value={avatar}
+            defaultValue={avatar}
         onChange={(e) => setAvatar(e.target.value)}
         />
         </Form.Group>
@@ -70,7 +68,7 @@ export default function Profile(props){
         <Form.Label>Name</Form.Label>
         <Form.Control
             type="text"
-            value={name}
+            defaultValue={name}
         onChange={(e) => setName(e.target.value)}
         />
         </Form.Group>
@@ -79,7 +77,7 @@ export default function Profile(props){
         <Form.Control
             autoFocus
             type="email"
-            value={email}
+            defaultValue={email}
         onChange={(e) => setEmail(e.target.value)}
         />
         </Form.Group>
@@ -87,7 +85,7 @@ export default function Profile(props){
         <Form.Label>Password</Form.Label>
         <Form.Control
             type="password"
-            value={password}
+            defaultValue={password}
         onChange={(e) => setPassword(e.target.value)}
         />
             </Form.Group>

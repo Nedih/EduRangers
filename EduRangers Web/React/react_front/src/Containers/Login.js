@@ -4,21 +4,14 @@ import './Login.css';
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import { useAppContext } from "../Libs/ContextLib";
-import { Redirect } from "react-router-dom";
 import history from "../GlobalHistory/GlobalHistory"
 
 export default function LoginUser() {
 
-  const [status, setStatus] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const { userHasAuthenticated } = useAppContext();
   const { setUserEmail } = useAppContext();
-
-
-  function validateForm() {
-    return email.length > 0 && password.length > 0;
-  }
 
   function handleSubmit(event) {
     event.preventDefault();
