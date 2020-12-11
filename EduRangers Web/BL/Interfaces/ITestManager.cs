@@ -11,6 +11,7 @@ namespace BL.Interfaces
     public interface ITestManager
     {
         IEnumerable<TestModel> GetTest();
+        double AvgMark(int id);
 
         TestModel GetTestById(int id);
         IEnumerable<TestModel> GetTests(int id);

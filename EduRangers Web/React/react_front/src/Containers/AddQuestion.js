@@ -32,8 +32,8 @@ export default function AddQuestion(props){
         <div className="Course">
           <div>
         <form onSubmit={Add}>
-          <label>
-            Course Name:</label>
+          <h1>
+            Question Text:</h1>
             <input type="text" name="Email" onChange={(e) => setName(e.target.value)} />
             
           

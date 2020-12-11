@@ -1,9 +1,12 @@
 import React, {useState, useEffect}  from 'react';
-    import axios from 'axios';
-    import './Course.css';
-    import Form from "react-bootstrap/Form";
-    import Button from "react-bootstrap/Button";
-    import history from "../GlobalHistory/GlobalHistory"
+import axios from 'axios';
+import './Course.css';
+import Form from "react-bootstrap/Form";
+import Button from "react-bootstrap/Button";
+import history from "../GlobalHistory/GlobalHistory";
+import edit from '../Res/Images/edit.png';
+import del from '../Res/Images/delete.png';
+import MultiSelect from "react-multi-select-component";
 
 export default function Course(props){
 
@@ -12,7 +15,38 @@ export default function Course(props){
         const [desc, setDesc] = useState(); 
         const [isLoading, setIsLoading] = useState(true);
         const [error, setError] = useState();
+        const [user, setUser] = useState();
+        const [optionsss, setOptionsss] = useState([{
+          label: "",
+          value: null
+      }]);
+      const [selected, setSelected] = useState([]);
         
+        function GetUser() {
+          axios({method: 'get',
+          url: `https://localhost:44327/api/Account/Profile/?email=${props.match.params.email}`,
+          headers: {'Content-Type': 'application/json'}})
+            .then(
+              (result) => {
+                console.log(result)
+                setUser(result.data);
+              }
+            )
+        }
+
+        function GetAbs() {
+          axios({method: 'get',
+          url: `https://localhost:44327/api/Ability/Abs/`,
+          headers: {'Content-Type': 'application/json'}})
+            .then(
+              (result) => {
+                console.log("RESULT: ", result.data)
+                //setAbs(result.data)
+                setOptionsss(result.data)
+                
+              })
+        }
+
         function GetCourse() {
             axios({method: 'get',
             url: `https://localhost:44327/api/Course/?id=${props.match.params.id}`,
@@ -21,6 +55,7 @@ export default function Course(props){
                 (result) => {
                   console.log(result.data)
                   setCourse(result.data)
+                  setSelected(result.data.Abilities);
                   setIsLoading(false);
                 }
               ).catch(error => {setError(error);
@@ -54,7 +89,9 @@ export default function Course(props){
 
 
         useEffect(() => {
-             GetCourse();
+          GetUser();
+          GetAbs();
+          GetCourse();
         }, []);
 
         if(isLoading){
@@ -68,16 +105,24 @@ export default function Course(props){
         
         
 
-        const Tests = course.Tests.map((item => <ul key = {item.Id}><li>{item.TestName}<Button onClick={() => history.push(`/test/${item.Id}`)}>Edit</Button><Button onClick={() => {axios.delete(`https://localhost:44327/api/Test/?id=${item.Id}`)
-        .then(res => {
-          console.log(res);
-          console.log(res.data);
-        })}}>Delete</Button></li><li>{item.TestDescription}</li></ul>));
+        const Tests = course.Tests.map((item => <div className="info" key = {item.Id}>
+          <div style = {{display: "flex"}}>
+          <h1>{item.TestName}</h1>
+          <div className="mybutton2" ><Button  onClick={() => history.push(`/test/${item.Id}/${props.match.params.email}`)}><img src={edit}/></Button><Button  onClick={() => 
+          {axios.delete(`https://localhost:44327/api/Test/?id=${item.Id}`)
+          .then(res => {
+            console.log(res);
+            console.log(res.data);
+          })}}>
+        <img src={del}/></Button></div></div>
+        <p>{item.TestDescription}</p>
+        <li>Average Mark: {item.AvgMark}</li>
+        </div>));
         console.log({Tests});
 
         return(
         <div className="Course">
-          <Button onClick={() => history.push(`/addtest/${course.Id}`)}>Add test</Button>
+           
           <Form onSubmit={handleSubmit}>
             <Form.Group size="lg" controlId="name">
         <Form.Label><h3>Course</h3></Form.Label>
@@ -95,13 +140,27 @@ export default function Course(props){
         onChange={(e) => setDesc(e.target.value)}
         />
         </Form.Group>
+        <div>
+      <h1>Select Abilities</h1>
+      <pre>{JSON.stringify(selected)}</pre>
+      <MultiSelect
+        options={optionsss}
+        value={selected}
+        onChange={setSelected}
+        labelledBy={"Select"}
+      />
+    </div>
+        <li>Average Mark: {course.AvgMark}</li>
         <Button block size="lg" type="submit">
         Save
         </Button>
     </Form>
+        <h1>{course.CourseName} - Tests</h1><div className="mycontainer">
+      <p>Prof. {user.Name}</p>
+          <Button onClick={() => history.push(`/addtest/${course.Id}`)}><div className="mybtn">Add a test</div></Button></div>
+        <h1>Tests:</h1>
         <br />
         <br />
-        <h6>Tests:</h6>
         {Tests}
         </div>
         )

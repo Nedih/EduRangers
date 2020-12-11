@@ -30,7 +30,16 @@ namespace BL.Services
             Course course = mapper.Map<Course>(model);
             Professor p = (Professor)this.userManager.FindByEmail(model.AuthorEmail);
             course.Author = p;
-
+            var temp = model.Abilities;
+            //course.Abilities
+            List<CourseAbility> Flex = new List<CourseAbility>();
+            foreach (var i in temp)
+            {
+                CourseAbility q = new CourseAbility();
+                q.Ability = this.repository.FirstorDefault<Ability>(x => x.AbilityName == i.value);
+                q.Course = course;
+                Flex.Add(q);
+            }
             this.repository.AddAndSave(course);
         }
 
@@ -41,29 +50,101 @@ namespace BL.Services
         public IEnumerable<CourseModel> GetCourse()
         {
             var mapper = MapHelper.Mapping<Course, CourseModel>();
-            return mapper.Map<List<CourseModel>>(this.repository.GetAll<Course>());
-
+            var list = mapper.Map<List<CourseModel>>(this.repository.GetAll<Course>());
+            foreach (var i in list)
+            {
+                var temp = this.repository.GetAttemptsWhere<Attempt>(x => x.Test.Course.Id == i.Id);
+                List<int> marks = new List<int>();
+                foreach (var t in temp)
+                {
+                    marks.Add((int)t.Mark);
+                }
+                if (marks.Count != 0)
+                    i.AvgMark = marks.Average();
+                var abs = this.repository.GetCourseAbilityWhere<CourseAbility>(x => x.Course.Id == i.Id);
+                List<SelectModel> Flex = new List<SelectModel>();
+                foreach (var a in abs)
+                {
+                    SelectModel q = new SelectModel();
+                    q.label = a.Ability.AbilityName;
+                    q.value = a.Ability.AbilityName;
+                    Flex.Add(q);
+                }
+                i.Abilities = Flex;
+            }
+            return list;
         }
 
         public CourseModel GetCourse(Func<Course, bool> predicate)
         {
 
             var mapper = MapHelper.Mapping<Course, CourseModel>();
-            return mapper.Map<CourseModel>(this.repository.FirstorDefault(predicate));
+            var course = mapper.Map<CourseModel>(this.repository.FirstorDefault(predicate));
+            var temp = this.repository.GetAttemptsWhere<Attempt>(x => x.Test.Course.Id == course.Id);
+            List<int> marks = new List<int>();
+            foreach (var t in temp)
+            {
+                marks.Add((int)t.Mark);
+            }
+            if (marks.Count != 0)
+                course.AvgMark = marks.Average();
+            var abs = this.repository.GetCourseAbilityWhere<CourseAbility>(x => x.Course.Id == course.Id);
+            List<SelectModel> Flex = new List<SelectModel>();
+            foreach (var i in abs)
+            {
+                SelectModel q = new SelectModel();
+                q.label = i.Ability.AbilityName;
+                q.value = i.Ability.AbilityName;
+                Flex.Add(q);
+            }
+            course.Abilities = Flex;
+            return course;
         }
 
         public CourseModel GetCourseById(int id)
         {
 
             var mapper = MapHelper.Mapping<Course, CourseModel>();
-            return mapper.Map<CourseModel>(this.repository.FirstorDefault<Course>(x => x.Id == id));
+            var course = mapper.Map<CourseModel>(this.repository.FirstorDefault<Course>(x => x.Id == id));
+            var temp = this.repository.GetAttemptsWhere<Attempt>(x => x.Test.Course.Id == id);
+            List<int> marks = new List<int>();
+            foreach (var t in temp)
+            {
+                marks.Add((int)t.Mark);
+            }
+            if (marks.Count != 0)
+                course.AvgMark = marks.Average();
+            var abs = this.repository.GetCourseAbilityWhere<CourseAbility>(x => x.Course.Id == course.Id);
+            List<SelectModel> Flex = new List<SelectModel>();
+            foreach (var i in abs)
+            {
+                SelectModel q = new SelectModel();
+                q.label = i.Ability.AbilityName;
+                q.value = i.Ability.AbilityName;
+                Flex.Add(q);
+            }
+            course.Abilities = Flex;
+            return course;
         }
 
         public IEnumerable<CourseModel> GetCourseByProf(string email)
         {
             var mapper = MapHelper.Mapping<Course, CourseModelMap>();
             var mapper2 = MapHelper.Mapping<CourseModelMap, CourseModel>();
-            return mapper2.Map<List<CourseModel>>(mapper.Map<List<CourseModelMap>>(this.repository.GetCourseWhere<Course>(x => x.Author.Email == email)));
+            var list = mapper2.Map<List<CourseModel>>(mapper.Map<List<CourseModelMap>>(this.repository.GetCourseWhere<Course>(x => x.Author.Email == email)));
+            
+            foreach (var i in list)
+            {
+                var temp = this.repository.GetAttemptsWhere<Attempt>(x => x.Test.Course.Id == i.Id);
+                List<int> marks = new List<int>();
+                foreach (var t in temp)
+                {
+                    marks.Add((int)t.Mark);
+                }
+                if (marks.Count != 0)
+                    i.AvgMark = marks.Average();
+            }
+            return list;
         }
 
         public void RemoveCourse(int id)

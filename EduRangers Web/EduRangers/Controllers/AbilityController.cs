@@ -28,6 +28,22 @@ namespace EduRangers.Controllers
             return this.abilityService.GetAbility();
         }
 
+        [Route("Abs")]
+        [HttpGet]
+        public IEnumerable<SelectModel> Abs()
+        {
+            var abs = this.abilityService.GetAbility();
+            List<SelectModel> Flex = new List<SelectModel>();
+            foreach (var i in abs)
+            {
+                SelectModel q = new SelectModel();
+                q.label = i.AbilityName;
+                q.value = i.AbilityName;
+                Flex.Add(q);
+            }
+            return Flex;
+        }
+
         // GET api/values/5
         public AbilityModel Get(int id)
         {

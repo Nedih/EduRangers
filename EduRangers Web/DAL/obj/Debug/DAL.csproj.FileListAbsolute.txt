@@ -51,3 +51,7 @@ C:\Users\Flash\Documents\GitHub\EduRangers\EduRangers Web\DAL\obj\Debug\DAL.Migr
 C:\Users\Flash\Documents\GitHub\EduRangers\EduRangers Web\DAL\obj\Debug\DAL.Migrations.DeleteProfiles.resources
 C:\Users\Flash\Documents\GitHub\EduRangers\EduRangers Web\DAL\obj\Debug\DAL.Migrations.Answers.resources
 C:\Users\Flash\Documents\GitHub\EduRangers\EduRangers Web\DAL\obj\Debug\DAL.Migrations.Answer2.resources
+C:\Users\Flash\Documents\GitHub\EduRangers\EduRangers Web\DAL\obj\Debug\DAL.Migrations.Smth.resources
+C:\Users\Flash\Documents\GitHub\EduRangers\EduRangers Web\DAL\obj\Debug\DAL.Migrations.Smth2.resources
+C:\Users\Flash\Documents\GitHub\EduRangers\EduRangers Web\DAL\obj\Debug\DAL.Migrations.Smth3.resources
+C:\Users\Flash\Documents\GitHub\EduRangers\EduRangers Web\DAL\obj\Debug\DAL.Migrations.Abs.resources

@@ -24,7 +24,7 @@ namespace BL.Services
 
             var mapper = MapHelper.Mapping<AttemptModel, Attempt>();
             Attempt attempt = mapper.Map<Attempt>(model);
-
+            attempt.DateApplied = DateTime.Now;
             this.repository.AddAndSave<Attempt>(attempt);
         }
 
@@ -32,6 +32,24 @@ namespace BL.Services
         {
             this.repository.Dispose();
         }
+        public IEnumerable<AttemptModel> GetAttempts(Func<Attempt, bool> predicate)
+        {
+            var mapper = MapHelper.Mapping<Attempt, AttemptModel>();
+            return mapper.Map<List<AttemptModel>>(this.repository.GetAttemptsWhere<Attempt>(predicate));
+        }
+
+        public IEnumerable<AttemptModel> GetMarks(string email)
+        {
+            var mapper = MapHelper.Mapping<Attempt, AttemptModel>();
+            return mapper.Map<List<AttemptModel>>(this.GetAttempts(x => x.Test.Course.Author.Email == email));
+        }
+
+        public IEnumerable<AttemptModel> GetStudentMarks(string email)
+        {
+            var mapper = MapHelper.Mapping<Attempt, AttemptModel>();
+            return mapper.Map<List<AttemptModel>>(this.GetAttempts(x => x.Student.Email == email));
+        }
+
         public IEnumerable<AttemptModel> GetAttempt()
         {
             var mapper = MapHelper.Mapping<Attempt, AttemptModel>();

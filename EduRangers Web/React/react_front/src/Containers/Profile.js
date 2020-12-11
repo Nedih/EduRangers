@@ -1,4 +1,4 @@
-import React, {useState}  from 'react';
+import React, {useState,  useEffect}  from 'react';
 import axios from 'axios';
 import './Profile.css';
 import Form from "react-bootstrap/Form";
@@ -11,6 +11,8 @@ export default function Profile(props){
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [name, setName] = useState("");
+    const [isLoading, setIsLoading] = useState(true);
+    const [error, setError] = useState();
 
     function GetUser() {
       axios({method: 'get',
@@ -20,8 +22,10 @@ export default function Profile(props){
           (result) => {
             console.log(result)
             setUser(result.data);
+            setIsLoading(false);
           }
-        )
+        ).catch(error => {setError(error);
+                          setIsLoading(false);}) 
     }
 
     function handleSubmit(event) {
@@ -51,24 +55,40 @@ export default function Profile(props){
           }) 
       }
 
-  GetUser();
+      useEffect(() => {
+        GetUser();
+      }, []);
+
+      if(isLoading){
+          return(
+          <p>Loading...</p>
+          )
+      }
+      else if(error){
+          return(<p>Error</p>)
+      }
+      
     return (
-    <div className="Profile">
+    <div className="Course">
     <Form onSubmit={handleSubmit}>
+      <div style = {{display : "flex"}}>
+        <div>
+        <img src={user.UserAvatar} width="128px" height="128px"/>
         <Form.Group size="lg" controlId="avatar">
-            <img src={avatar} width="128px" height="128px"/>
         <Form.Label>Avatar</Form.Label>
         <Form.Control
             type="text"
-            defaultValue={avatar}
+            defaultValue={user.UserAvatar}
         onChange={(e) => setAvatar(e.target.value)}
         />
         </Form.Group>
+        </div>
+        <div style = {{margin: "auto"}}>
         <Form.Group size="lg" controlId="name">
         <Form.Label>Name</Form.Label>
         <Form.Control
             type="text"
-            defaultValue={name}
+            defaultValue={user.Name}
         onChange={(e) => setName(e.target.value)}
         />
         </Form.Group>
@@ -77,15 +97,15 @@ export default function Profile(props){
         <Form.Control
             autoFocus
             type="email"
-            defaultValue={email}
+            defaultValue={user.Email}
         onChange={(e) => setEmail(e.target.value)}
         />
-        </Form.Group>
+        </Form.Group></div></div>
         <Form.Group size="lg" controlId="password">
         <Form.Label>Password</Form.Label>
         <Form.Control
             type="password"
-            defaultValue={password}
+            defaultValue={user.Password}
         onChange={(e) => setPassword(e.target.value)}
         />
             </Form.Group>

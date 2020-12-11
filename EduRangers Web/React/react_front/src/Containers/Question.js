@@ -3,7 +3,7 @@ import React, {useState, useEffect}  from 'react';
     import './Question.css';
     import Form from "react-bootstrap/Form";
     import Button from "react-bootstrap/Button";
-    import { Formik, Field, Form as Form1} from "formik";
+    import { Formik, Field} from "formik";
     import history from "../GlobalHistory/GlobalHistory"
 
     export default function Question(props){
@@ -83,6 +83,9 @@ import React, {useState, useEffect}  from 'react';
                     }) */
                 }
 
+                function chck(event){
+                    return !event.target.checked;
+                }
 
         useEffect(() => {
             GetQuestion();
@@ -100,7 +103,7 @@ import React, {useState, useEffect}  from 'react';
         
 
        const Answers = question.Answers.map((item =>   <Formik key = {item.Id} 
-        initialValues={{ AnswerText: `${item.AnswerText}`, IsCorrect: `${item.IsCorrect}`, Id: `${item.Id}` }}
+        initialValues={{ AnswerText: `${item.AnswerText}`, isCorrect: item.IsCorrect, Id: `${item.Id}` }}
         onSubmit={async values => {
             const AnSwer = {
                 AnswerText: values.AnswerText,
@@ -126,11 +129,10 @@ import React, {useState, useEffect}  from 'react';
           alert(JSON.stringify(AnSwer));
 
         }}> 
-        <Form1>
+            <div>
         <Field
-            type="checkbox" id={`${item.Id}chb`} name="IsCorrect"
+            type="checkbox" name="isCorrect" 
             className="form-check-input"
-            checked={item.IsCorrect}
         />
         <Field
             type="text" name="AnswerText" id={`${item.Id}txt`}
@@ -144,14 +146,13 @@ import React, {useState, useEffect}  from 'react';
         console.log(res);
         console.log(res.data);
       })}}>Delete</Button>
-        </Form1>
         
+        </div>
     </Formik>));
         console.log({Answers});
 
         return(
-        <div className="Question">
-            <Button onClick={() => history.push(`/addanswer/${question.Id}`)}>Add answer</Button>
+        <div className="Course">
             <Form onSubmit={handleSubmit}>
             <Form.Group size="lg" controlId="name">
         <Form.Label><h3>Question</h3></Form.Label>
@@ -165,9 +166,13 @@ import React, {useState, useEffect}  from 'react';
         Save
         </Button>
         </Form>
+
+        <h1>{question.QuestionText} - Answers</h1><div className="mycontainer">
+      <p>Prof.</p>
+          <Button onClick={() => history.push(`/addanswer/${question.Id}`)}><div className="mybtn">Add an answer</div></Button></div>
         <br />
         <br />
-        <h6>Answers:</h6>
+        <h1>Answers:</h1>
         {Answers}
         
         </div>

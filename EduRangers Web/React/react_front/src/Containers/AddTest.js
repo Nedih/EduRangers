@@ -34,10 +34,11 @@ export default function AddTest(props){
         <div className="Course">
           <div>
         <form onSubmit={Add}>
-          <label>
-            Test Name:</label>
+          <h1>
+            Test Name:</h1>
             <input type="text" name="Email" onChange={(e) => setName(e.target.value)} />
-            <label>Test Description:</label>
+            <br />
+            <h1>Test Description:</h1>
             <input type="text" name="Password" onChange={(e) => setDesc(e.target.value)} />
             
           

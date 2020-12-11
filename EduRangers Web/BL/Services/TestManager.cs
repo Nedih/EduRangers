@@ -35,28 +35,49 @@ namespace BL.Services
         public IEnumerable<TestModel> GetTest()
         {
             var mapper = MapHelper.Mapping<Test, TestModel>();
-            return mapper.Map<List<TestModel>>(this.repository.GetAll<Test>());
+            var list = mapper.Map<List<TestModel>>(this.repository.GetAll<Test>());
+            foreach (var i in list)
+                i.AvgMark = AvgMark(i.Id);
+            return list;
+        }
 
+        public double AvgMark(int id)
+        {
+            var temp = this.repository.GetAttemptsWhere<Attempt>(x => x.Test.Id == id);
+            List<int> marks = new List<int>();
+            foreach(var i in temp)
+            {
+                marks.Add((int)i.Mark);
+            }
+            if (marks.Count != 0)
+               return marks.Average();
+            return 0;
         }
 
         public IEnumerable<TestModel> GetTests(int id) {
             var mapper = MapHelper.Mapping<Test, TestModelMap>();
             var mapper2 = MapHelper.Mapping<TestModelMap, TestModel>();
-            return mapper2.Map<List<TestModel>>(mapper.Map<List<TestModelMap>>(this.repository.GetTestWhere<Test>(x => x.Course.Id == id)));
+            var list = mapper2.Map<List<TestModel>>(mapper.Map<List<TestModelMap>>(this.repository.GetTestWhere<Test>(x => x.Course.Id == id)));
+            foreach (var i in list)
+                i.AvgMark = AvgMark(i.Id);
+            return list;
         }
 
         public TestModel GetTest(Func<Test, bool> predicate)
         {
-
             var mapper = MapHelper.Mapping<Test, TestModel>();
-            return mapper.Map<TestModel>(this.repository.FirstorDefault(predicate));
+            var test = mapper.Map<TestModel>(this.repository.FirstorDefault(predicate));
+            test.AvgMark = AvgMark(test.Id);
+            return test;
         }
 
         public TestModel GetTestById(int id)
         {
 
             var mapper = MapHelper.Mapping<Test, TestModel>();
-            return mapper.Map<TestModel>(this.repository.FirstorDefault<Test>(x => x.Id == id));
+            var test = mapper.Map<TestModel>(this.repository.FirstorDefault<Test>(x => x.Id == id));
+            test.AvgMark = AvgMark(test.Id);
+            return test;
         }
 
         public void RemoveTest(int id)

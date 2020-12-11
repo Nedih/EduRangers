@@ -30,6 +30,13 @@ namespace EduRangers.Controllers
         }
 
         // GET api/values/5
+        [Route("Mark")]
+        [HttpGet]
+        public double Mark(int id)
+        {
+            return this.testService.AvgMark(id);
+        }
+
         public TestModel GetTest(int id)
         {
             TestModel test = this.testService.GetTestById(id);

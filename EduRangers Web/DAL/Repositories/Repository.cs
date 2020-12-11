@@ -39,6 +39,16 @@ namespace DAL.Repositories
             return this.context.Set<TEntity>().Include("Questions").Include("Course").Where(predicate).ToList();
         }
 
+        IList<TEntity> IRepository.GetCourseAbilityWhere<TEntity>(Func<TEntity, bool> predicate)
+        {
+            return this.context.Set<TEntity>().Include("Course").Include("Ability").Where(predicate).ToList();
+        }
+
+        IList<TEntity> IRepository.GetAttemptsWhere<TEntity>(Func<TEntity, bool> predicate)
+        {
+            return this.context.Set<TEntity>().Include("Test").Include("Test.Course").Include("Test.Course.Author").Include("Student").Where(predicate).ToList();
+        }
+
         IList<TEntity> IRepository.GetWhere<TEntity>(Func<TEntity, bool> predicate)
         {
             return this.context.Set<TEntity>().Where(predicate).ToList();
@@ -56,6 +66,11 @@ namespace DAL.Repositories
         IList<TEntity> IRepository.GetQuestionWhere<TEntity>(Func<TEntity, bool> predicate)
         {
             return this.context.Set<TEntity>().Include("Test").Where(predicate).ToList();
+        }
+
+        double IRepository.AvgMark<TEntity>(Func<TEntity, bool> predicate)
+        {
+            return 0; //this.context.Set<TEntity>().Where(predicate)..Average();
         }
 
         void IRepository.AddAndSave<TEntity>(TEntity entity)

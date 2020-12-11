@@ -34,7 +34,11 @@ namespace BL.Services
             var temp =  mapper2.Map<List<QuestionModel>>(mapper.Map<List<QuestionModelMap>>(this.repository.GetQuestionWhere<Question>(x => x.Test.Id == id)));
             foreach(var q in temp)
             {
-                q.AnswersString = this.repository.GetAnswerWhere<Answer>(x => x.Question.Id == id).ToString();
+                var ansv = this.repository.GetAnswerWhere<Answer>(x => x.Question.Id == q.Id);
+                foreach (var t in ansv)
+                {
+                    q.AnswersString += t.AnswerText + ";   ";
+                }
             }
             return temp;
         }

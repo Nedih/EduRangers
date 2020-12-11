@@ -1,12 +1,16 @@
 import React, {useState, useEffect}  from 'react';
-    import axios from 'axios';
-    import './Test.css';
-    import Form from "react-bootstrap/Form";
-    import Button from "react-bootstrap/Button";
-    import history from "../GlobalHistory/GlobalHistory"
+import axios from 'axios';
+import './Test.css';
+import Form from "react-bootstrap/Form";
+import Button from "react-bootstrap/Button";
+import history from "../GlobalHistory/GlobalHistory"
+import edit from '../Res/Images/edit.png';
+import del from '../Res/Images/delete.png';
 
 export default function Test(props){
     const [test, setTest] = useState();  
+    const [questions, setQuestions] = useState();  
+    const [user, setUser] = useState();
         const [name, setName] = useState(); 
         const [desc, setDesc] = useState(); 
         const [isLoading, setIsLoading] = useState(true);
@@ -20,10 +24,23 @@ export default function Test(props){
                 (result) => {
                   console.log("RESULT: ", result.data)
                   setTest(result.data)
+                  setQuestions(result.data.Questions)
                   setIsLoading(false);
                 }
               ).catch(error => {setError(error);
                                 setIsLoading(false);}) 
+          }
+
+          function GetUser() {
+            axios({method: 'get',
+            url: `https://localhost:44327/api/Account/Profile/?email=${props.match.params.email}`,
+            headers: {'Content-Type': 'application/json'}})
+              .then(
+                (result) => {
+                  console.log(result)
+                  setUser(result.data);
+                }
+              )
           }
 
           function handleSubmit(event) {
@@ -53,6 +70,7 @@ export default function Test(props){
 
 
         useEffect(() => {
+            GetUser();
              GetTest();
         }, []);
 
@@ -67,16 +85,21 @@ export default function Test(props){
         
         
 
-        const Questions = test.Questions.map((item => <ul key = {item.Id}><li>{item.QuestionText}<Button onClick={() => history.push(`/question/${item.Id}`)}>Edit</Button><Button onClick={() => {axios.delete(`https://localhost:44327/api/Question/?id=${item.Id}`)
-        .then(res => {
-          console.log(res);
-          console.log(res.data);
-        })}}>Delete</Button></li><li>{item.Answers.AnswersString}</li></ul>));
-        console.log({Questions});
+        const Quest = questions.map((item => <div className="info">
+          <div style = {{display: "flex"}}>
+          <h1>{item.QuestionText}</h1>
+        <div className="mybutton2" ><Button  onClick={() => history.push(`/question/${item.Id}`)}><img src={edit}/></Button><Button  onClick={() => 
+          {axios.delete(`https://localhost:44327/api/Question/?id=${item.Id}`)
+          .then(res => {
+            console.log(res);
+            console.log(res.data);
+          })}}>
+        <img src={del}/></Button></div></div>
+        <p>{item.AnswersString}</p></div>));
+        console.log({Quest});
 
         return(
-        <div className="Test">
-          <Button onClick={() => history.push(`/addquestion/${test.Id}`)}>Add question</Button>
+        <div className="Course">
           <Form onSubmit={handleSubmit}>
             <Form.Group size="lg" controlId="name">
         <Form.Label><h3>Test</h3></Form.Label>
@@ -94,14 +117,18 @@ export default function Test(props){
         onChange={(e) => setDesc(e.target.value)}
         />
         </Form.Group>
+        <li>Average Mark: {test.AvgMark}</li>
         <Button block size="lg" type="submit">
         Save
         </Button>
     </Form>
+    <h1>{test.TestName} - Questions</h1><div className="mycontainer">
+      <p>Prof. {user.Name}</p>
+          <Button onClick={() => history.push(`/addquestion/${test.Id}`)}><div className="mybtn">Add a question</div></Button></div>
         <br />
         <br />
-        <h6>Questions:</h6>
-        {Questions}
+        <h1>Questions:</h1>
+        {Quest}
         </div>
         )
     

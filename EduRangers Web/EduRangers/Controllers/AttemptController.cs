@@ -27,6 +27,20 @@ namespace EduRangers.Controllers
             return this.attemptService.GetAttempt();
         }
 
+        [Route("Marks")]
+        [HttpGet]
+        public IEnumerable<AttemptModel> Marks(string email)
+        {
+            return this.attemptService.GetMarks(email);
+        }
+
+        [Route("StudentMarks")]
+        [HttpGet]
+        public IEnumerable<AttemptModel> StudentMarks(string email)
+        {
+            return this.attemptService.GetStudentMarks(email);
+        }
+
         // GET api/values/5
         public AttemptModel Get(int id)
         {

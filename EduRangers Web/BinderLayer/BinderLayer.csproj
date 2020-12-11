@@ -70,6 +70,7 @@
     <Compile Include="Models\QuestionModel.cs" />
     <Compile Include="Models\QuestionModelMap.cs" />
     <Compile Include="Models\RegisterModel.cs" />
+    <Compile Include="Models\SelectModel.cs" />
     <Compile Include="Models\TestModel.cs" />
     <Compile Include="Models\TestModelMap.cs" />
     <Compile Include="Models\UserSlotModel.cs" />

@@ -12,6 +12,7 @@ import AddСourse from './Containers/AddCourse';
 import AddTest from './Containers/AddTest';
 import AddQuestion from './Containers/AddQuestion';
 import AddAnswer from './Containers/AddAnswer'
+import Stats from './Containers/Stats'
 
 export default function Routes(props) {
   return (
@@ -32,10 +33,15 @@ export default function Routes(props) {
         <Register />
       </Route>
       <Route exact path="/courses/:email" component={Courses}/>
-      <Route exact path="/course/:id" component={Сourse} />
-      <Route exact path="/test/:id" component={Test} />
+      <Route exact path="/course/:id/:email" component={Сourse} />
+      <Route exact path="/addcourse/:email" component={AddСourse} />
+      <Route exact path="/test/:id/:email" component={Test} />
+      <Route exact path="/addtest/:id" component={AddTest} />
       <Route exact path="/question/:id" component={Question} />
-      <Route exact path="/profile"component={Profile} />
+      <Route exact path="/addquestion/:id" component={AddQuestion} />
+      <Route exact path="/addanswer/:id" component={AddAnswer} />
+      <Route exact path="/profile/:email"component={Profile} />
+      <Route exact path="/stats/:email"component={Stats} />
     </Switch>
   );
 }

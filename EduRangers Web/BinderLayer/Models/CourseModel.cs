@@ -10,6 +10,8 @@ namespace BinderLayer.Models
         public string AuthorEmail { get; set; }
         public string CourseName { get; set; }
         public string CourseDescription { get; set; }
+        public double AvgMark { get; set; }
         public List<TestModel> Tests { get; set; }
+        public List<SelectModel> Abilities { get; set; }
     }
 }

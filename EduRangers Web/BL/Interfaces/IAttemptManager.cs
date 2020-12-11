@@ -11,7 +11,9 @@ namespace BL.Interfaces
     public interface IAttemptManager
     {
         IEnumerable<AttemptModel> GetAttempt();
-
+        IEnumerable<AttemptModel> GetAttempts(Func<Attempt, bool> predicate);
+        IEnumerable<AttemptModel> GetMarks(string email);
+        IEnumerable<AttemptModel> GetStudentMarks(string email);
         AttemptModel GetAttemptById(int id);
 
         AttemptModel GetAttempt(Func<Attempt, bool> predicate);

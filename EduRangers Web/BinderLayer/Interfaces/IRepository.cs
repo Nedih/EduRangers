@@ -10,12 +10,15 @@ namespace BinderLayer.Interfaces
     {
         IList<TEntity> GetAll<TEntity>() where TEntity : class, IEntity;
         IList<TEntity> GetCourseWhere<TEntity>(Func<TEntity, bool> predicate) where TEntity : class, IEntity;
+        IList<TEntity> GetCourseAbilityWhere<TEntity>(Func<TEntity, bool> predicate) where TEntity : class, IEntity;
         IList<TEntity> GetTestWhere<TEntity>(Func<TEntity, bool> predicate) where TEntity : class, IEntity;
         IList<TEntity> GetQuestionWhere<TEntity>(Func<TEntity, bool> predicate) where TEntity : class, IEntity;
         IList<TEntity> GetAnswerWhere<TEntity>(Func<TEntity, bool> predicate) where TEntity : class, IEntity;
+        IList<TEntity> GetAttemptsWhere<TEntity>(Func<TEntity, bool> predicate) where TEntity : class, IEntity;
         IList<TEntity> GetWhere<TEntity>(Func<TEntity, bool> predicate) where TEntity : class, IEntity;
 
         TEntity FirstorDefault<TEntity>(Func<TEntity, bool> predicate) where TEntity : class, IEntity;
+        double AvgMark<TEntity>(Func<TEntity, bool> predicate) where TEntity : class, IEntity;
 
         void AddAndSave<TEntity>(TEntity entity) where TEntity : class, IEntity;
 

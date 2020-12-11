@@ -3,11 +3,26 @@ import axios from 'axios';
 import './Courses.css';
 import Button from "react-bootstrap/Button";
 import history from "../GlobalHistory/GlobalHistory"
+import edit from '../Res/Images/edit.png';
+import del from '../Res/Images/delete.png';
 
 export default function Courses(props){
-    const [courses, setCourses] = useState([]);
+    const [courses, setCourses] = useState();
+    const [user, setUser] = useState();
     const [isLoading, setIsLoading] = useState(true);
         const [error, setError] = useState();
+
+        function GetUser() {
+          axios({method: 'get',
+          url: `https://localhost:44327/api/Account/Profile/?email=${props.match.params.email}`,
+          headers: {'Content-Type': 'application/json'}})
+            .then(
+              (result) => {
+                console.log(result)
+                setUser(result.data);
+              }
+            )
+        }
 
     function GetCourses() {
         axios({method: 'get',
@@ -24,6 +39,7 @@ export default function Courses(props){
       }
        
       useEffect(() => {
+        GetUser();
         GetCourses();
    }, []);
 
@@ -42,12 +58,20 @@ export default function Courses(props){
 
       return(
         <div className="Course">
-          <Button onClick={() => history.push(`/addcourse/${props.match.params.email}`)}>Add course</Button>
-          {courses.map((item => <ul key = {item.Id}><li>{item.CourseName}<Button onClick={() => history.push(`/course/${item.Id}`)}>Edit</Button><Button onClick={() => {axios.delete(`https://localhost:44327/api/Course/?id=${item.Id}`)
+          <h1>Courses</h1><div className="mycontainer">
+      <p>Prof. {user.Name}</p>
+          <Button onClick={() => history.push(`/addcourse/${props.match.params.email}`)}><div className="mybtn">Add a course</div></Button></div>
+          {courses.map((item => <div className="coursecontainer" key = {item.Id}>
+          <div className="books">
+          <div className="mybutton"><Button  onClick={() => history.push(`/course/${item.Id}/${props.match.params.email}`)}><img src={edit}/></Button><Button  onClick={() => 
+          {axios.delete(`https://localhost:44327/api/Course/?id=${item.Id}`)
       .then(res => {
         console.log(res);
         console.log(res.data);
-      })}}>Delete</Button></li><li>{item.CourseDescription}</li></ul>))}
+      })}}>
+        <img src={del}/></Button></div></div>
+          <div className="info"><h1>{item.CourseName}</h1>
+          <p>Description: {item.CourseDescription}</p><br /><p>Average Mark: {item.AvgMark}</p></div></div>))}
         </div>
       )
 

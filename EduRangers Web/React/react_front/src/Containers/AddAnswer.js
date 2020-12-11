@@ -42,9 +42,10 @@ export default function AddAnswer(props){
         <div className="Course">
           <div>
         <form onSubmit={Add}>
-          <label>
-            Answer Name:</label>
+          <h1>
+            Answer Text:</h1>
             <input type="text" name="Email" onChange={(e) => setName(e.target.value)} />
+            <br />
             <input type="text" name="IsCorrect" onChange={(e) => handleCheck(e)} />
           
           <Button type="submit">Add</Button>
