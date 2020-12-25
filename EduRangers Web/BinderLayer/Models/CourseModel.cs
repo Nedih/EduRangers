@@ -12,6 +12,6 @@ namespace BinderLayer.Models
         public string CourseDescription { get; set; }
         public double AvgMark { get; set; }
         public List<TestModel> Tests { get; set; }
-        public List<SelectModel> Abilities { get; set; }
+        public List<SelectModel> Abilitiess { get; set; }
     }
 }

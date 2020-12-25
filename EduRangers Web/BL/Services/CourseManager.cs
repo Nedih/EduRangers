@@ -30,7 +30,7 @@ namespace BL.Services
             Course course = mapper.Map<Course>(model);
             Professor p = (Professor)this.userManager.FindByEmail(model.AuthorEmail);
             course.Author = p;
-            var temp = model.Abilities;
+            var temp = model.Abilitiess;
             //course.Abilities
             List<CourseAbility> Flex = new List<CourseAbility>();
             foreach (var i in temp)
@@ -70,7 +70,7 @@ namespace BL.Services
                     q.value = a.Ability.AbilityName;
                     Flex.Add(q);
                 }
-                i.Abilities = Flex;
+                i.Abilitiess = Flex;
             }
             return list;
         }
@@ -97,7 +97,7 @@ namespace BL.Services
                 q.value = i.Ability.AbilityName;
                 Flex.Add(q);
             }
-            course.Abilities = Flex;
+            course.Abilitiess = Flex;
             return course;
         }
 
@@ -123,7 +123,7 @@ namespace BL.Services
                 q.value = i.Ability.AbilityName;
                 Flex.Add(q);
             }
-            course.Abilities = Flex;
+            course.Abilitiess = Flex;
             return course;
         }
 
