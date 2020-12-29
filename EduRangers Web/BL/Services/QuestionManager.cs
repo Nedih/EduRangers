@@ -83,8 +83,9 @@ namespace BL.Services
             var question = this.repository.FirstorDefault<Question>(x => x.Id == id);
             if (question == null)
                 throw new NullReferenceException();
-            var mapper = MapHelper.Mapping<QuestionModel, Question>();
-            question = mapper.Map<Question>(model);
+            question.Id = id;
+            if (model.QuestionText != null)
+                question.QuestionText = model.QuestionText;
 
             this.repository.UpdateAndSave(question);
         }

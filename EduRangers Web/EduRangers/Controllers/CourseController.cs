@@ -43,9 +43,15 @@ namespace EduRangers.Controllers
         }
 
         [Route("ProfCourses")]
-        public IEnumerable<CourseModel> GetProfCurses(string email)
+        public IEnumerable<CourseModel> GetProfCourses(string email)
         {
             return this.courseService.GetCourseByProf(email);
+        }
+
+        [Route("StudCourses")]
+        public IEnumerable<CourseModel> GetStudCourses(string email)
+        {
+            return this.courseService.GetCourse();
         }
 
         // POST api/values

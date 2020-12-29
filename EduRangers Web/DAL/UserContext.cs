@@ -11,7 +11,7 @@ namespace DAL
 {
     public class UserContext : IdentityDbContext<User>
     {
-        public UserContext() : base("EduRangersDB") { }
+        public UserContext() : base("DefaultConnection") { }
         public DbSet<Student> Students { get; set; }
         public DbSet<Professor> Professors { get; set; }
         public DbSet<Ability> Abilities { get; set; }

@@ -75,8 +75,10 @@ namespace BL.Services
             var user = this.userManager.FindById(id);
             if (user == null)
                 throw new NullReferenceException();
-            user.Email = userDto.Email;
-            user.UserName = userDto.UserName;
+            if(userDto.Name != null)
+                user.Name = userDto.Name;
+            if (userDto.UserAvatar != null)
+                user.UserAvatar = userDto.UserAvatar;
             var result = await userManager.UpdateAsync(user);
             await repo.SaveAsync();
             return new OperationDetails(true, "The user was succesfully updated");

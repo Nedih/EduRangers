@@ -93,8 +93,11 @@ namespace BL.Services
             var test = this.repository.FirstorDefault<Test>(x => x.Id == id);
             if (test == null)
                 throw new NullReferenceException();
-            var mapper = MapHelper.Mapping<Test, TestModel>();
-            test = mapper.Map<Test>(model);
+            test.Id = id;
+            if (model.TestName != null)
+                test.TestName = model.TestName;
+            if (model.TestDescription != null)
+                test.TestDescription = model.TestDescription;
 
             this.repository.UpdateAndSave(test);
         }

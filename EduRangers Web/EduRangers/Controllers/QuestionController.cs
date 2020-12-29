@@ -59,5 +59,11 @@ namespace EduRangers.Controllers
         {
             questionService.RemoveQuestion(id);
         }
+
+        /*[Route("CheckAnswer")]
+        public bool Check(AnswerModel answer)
+        {
+            return answerService.GetAnswerById(answer.)
+        }*/
     }
 }

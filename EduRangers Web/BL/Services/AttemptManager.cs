@@ -84,8 +84,11 @@ namespace BL.Services
             var attempt = this.repository.FirstorDefault<Attempt>(x => x.Id == id);
             if (attempt == null)
                 throw new NullReferenceException();
-            var mapper = MapHelper.Mapping<Attempt, AttemptModel>();
-            attempt = mapper.Map<Attempt>(model);
+            attempt.Id = id;
+            if (model.Mark != null)
+                attempt.Mark = model.Mark;
+            if (model.Result != null)
+                attempt.Result = model.Result;
 
             this.repository.UpdateAndSave(attempt);
         }

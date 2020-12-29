@@ -66,8 +66,13 @@ namespace BL.Services
             var ability = this.repository.FirstorDefault<Ability>(x => x.Id == id);
             if (ability == null)
                 throw new NullReferenceException();
-            var mapper = MapHelper.Mapping<AbilityModel, Ability>();
-            ability = mapper.Map<Ability>(model);
+            //var mapper = MapHelper.Mapping<AbilityModel, Ability>();
+            //ability = mapper.Map<Ability>(model);
+            ability.Id = id;
+            if (model.AbilityName != null)
+                ability.AbilityName = model.AbilityName;
+            if (model.AbilityDescription != null)
+                ability.AbilityDescription = model.AbilityDescription;
 
             this.repository.UpdateAndSave(ability);
         }

@@ -70,10 +70,10 @@ namespace EduRangers.Controllers
         }
 
         [HttpPut]
-        public async Task<OperationDetails> Update(string id, UserDTO user)
+        public async Task<OperationDetails> Update(string email, UserDTO user)
         {
 
-            return await this.UserService.Update(id, user);
+            return await this.UserService.Update(email, user);
         }
 
         [Route("Login")]
@@ -82,7 +82,7 @@ namespace EduRangers.Controllers
         //[ValidateAntiForgeryToken]
         public async Task<OperationDetails> Login(LoginModel model)
         {
-            await SetInitialDataAsync();
+            //await SetInitialDataAsync();
             if (ModelState.IsValid)
             {
                 UserDTO userDto = new UserDTO { Email = model.Email, Password = model.Password };
@@ -115,7 +115,7 @@ namespace EduRangers.Controllers
         //[ValidateAntiForgeryToken]
         public async Task<OperationDetails> Register([FromBody]RegisterModel model)
         {
-            await SetInitialDataAsync();
+            //await SetInitialDataAsync();
             if (ModelState.IsValid)
             {
                 UserDTO userDto = new UserDTO

@@ -12,8 +12,6 @@ C:\Users\Flash\Documents\GitHub\EduRangers\EduRangers Web\DAL\bin\Release\Entity
 C:\Users\Flash\Documents\GitHub\EduRangers\EduRangers Web\DAL\bin\Release\EntityFramework.SqlServer.xml
 C:\Users\Flash\Documents\GitHub\EduRangers\EduRangers Web\DAL\bin\Release\Microsoft.AspNet.Identity.Core.xml
 C:\Users\Flash\Documents\GitHub\EduRangers\EduRangers Web\DAL\bin\Release\Microsoft.AspNet.Identity.EntityFramework.xml
-C:\Users\Flash\Documents\GitHub\EduRangers\EduRangers Web\DAL\bin\Release\ru\EntityFramework.resources.dll
-C:\Users\Flash\Documents\GitHub\EduRangers\EduRangers Web\DAL\bin\Release\ru\EntityFramework.SqlServer.resources.dll
 C:\Users\Flash\Documents\GitHub\EduRangers\EduRangers Web\DAL\bin\Release\ru\Microsoft.AspNet.Identity.Core.resources.dll
 C:\Users\Flash\Documents\GitHub\EduRangers\EduRangers Web\DAL\bin\Release\ru\Microsoft.AspNet.Identity.EntityFramework.resources.dll
 C:\Users\Flash\Documents\GitHub\EduRangers\EduRangers Web\DAL\obj\Release\DAL.csprojAssemblyReference.cache

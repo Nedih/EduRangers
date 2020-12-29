@@ -65,8 +65,9 @@ namespace BL.Services
             var userSlot = this.repository.FirstorDefault<UserSlot>(x => x.Id == id);
             if (userSlot == null)
                 throw new NullReferenceException();
-            var mapper = MapHelper.Mapping<UserSlot, UserSlotModel>();
-            userSlot = mapper.Map<UserSlot>(model);
+            userSlot.Id = id;
+            if (model.Count != null)
+                userSlot.Count = model.Count;
 
             this.repository.UpdateAndSave(userSlot);
         }

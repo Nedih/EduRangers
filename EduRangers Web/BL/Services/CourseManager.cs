@@ -147,6 +147,26 @@ namespace BL.Services
             return list;
         }
 
+        public IEnumerable<CourseModel> GetCourseByStud(string email)
+        {
+            var mapper = MapHelper.Mapping<Course, CourseModelMap>();
+            var mapper2 = MapHelper.Mapping<CourseModelMap, CourseModel>();
+            var list = mapper2.Map<List<CourseModel>>(mapper.Map<List<CourseModelMap>>(this.repository.GetCourseWhere<Course>(x => x.Author.Email == email)));
+
+            foreach (var i in list)
+            {
+                var temp = this.repository.GetAttemptsWhere<Attempt>(x => x.Test.Course.Id == i.Id);
+                List<int> marks = new List<int>();
+                foreach (var t in temp)
+                {
+                    marks.Add((int)t.Mark);
+                }
+                if (marks.Count != 0)
+                    i.AvgMark = marks.Average();
+            }
+            return list;
+        }
+
         public void RemoveCourse(int id)
         {
             var course = this.repository.FirstorDefault<Course>(x => x.Id == id);
@@ -160,8 +180,13 @@ namespace BL.Services
             var course = this.repository.FirstorDefault<Course>(x => x.Id == id);
             if (course == null)
                 throw new NullReferenceException();
-            var mapper = MapHelper.Mapping<CourseModel, Course>();
-            course = mapper.Map<Course>(model);
+            course.Id = id;
+            if (model.CourseName != null)
+                course.CourseName = model.CourseName;
+            if (model.CourseDescription != null)
+                course.CourseDescription = model.CourseDescription;
+           /* if (model.AvgMark != null)
+                course. = model.AvgMark;*/
 
             this.repository.UpdateAndSave(course);
         }

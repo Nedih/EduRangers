@@ -74,11 +74,16 @@ namespace BL.Services
             var answer = this.repository.FirstorDefault<Answer>(x => x.Id == id);
             if (answer == null)
                 throw new NullReferenceException();
-            var mapper = MapHelper.Mapping<AnswerModel, Answer>();
+            //var mapper = MapHelper.Mapping<AnswerModel, Answer>();
             //model.Id = id;
-            answer = mapper.Map<Answer>(model);
+            //answer = mapper.Map<Answer>(model);
             //answer.Id = null;
-            answer.Question = this.repository.FirstorDefault<Question>(x => x.Id == model.QuestionId);
+            //answer.Question = this.repository.FirstorDefault<Question>(x => x.Id == model.QuestionId);
+            answer.Id = id;
+            if(model.AnswerText != null)
+                answer.AnswerText = model.AnswerText;
+            if (model.IsCorrect != null)
+                answer.IsCorrect = model.IsCorrect;
             this.repository.UpdateAndSave(answer);
         }
 
